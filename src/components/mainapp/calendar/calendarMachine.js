@@ -1,5 +1,4 @@
 import { assign, createMachine } from "xstate"
-import { GoogleCalendarAPI } from "./GoogleCalendarAPI"
 
 export const calendarMachine = createMachine(
   {
@@ -8,13 +7,8 @@ export const calendarMachine = createMachine(
     preserveActionOrder: true,
 
     context: {
-      googleCalendar: {
-        events: [],
-      },
-
-      appCalendar: {
-        events: [],
-      },
+      googleCalendarEvents: [],
+      appCalendarEvents: [],
 
       googleCalendarApi: null,
     },
@@ -31,15 +25,14 @@ export const calendarMachine = createMachine(
         invoke: {
           src: "checkIfGoogleCalendarPresent",
           onDone: [
-            "Dummy",
-            // {
-            //   target: "GoogleCalendarPresent",
-            //   cond: "Has Google Calendar",
-            // },
+            {
+              target: "GoogleCalendarPresent",
+              cond: (_, events) => events.data,
+            },
 
-            // {
-            //   target: "GoogleCalendarAbsent",
-            // },
+            {
+              target: "GoogleCalendarAbsent",
+            },
           ],
         },
       },
@@ -50,10 +43,7 @@ export const calendarMachine = createMachine(
           onDone: [
             {
               target: "ViewAppCalendar",
-              actions: [
-                "saveGoogleCalendarEventsToContext",
-                "processGoogleCalendarEvents",
-              ],
+              actions: ["processGoogleCalendarEvents"],
             },
           ],
         },
@@ -74,8 +64,24 @@ export const calendarMachine = createMachine(
 
       Dummy: {
         invoke: {
-          src: () => {
-            console.log("REACHED END")
+          src: (_, events) => {
+            console.log("REACHED END", events)
+          },
+        },
+      },
+
+      Dummy1: {
+        invoke: {
+          src: (_, events) => {
+            console.log("REACHED END 1", events)
+          },
+        },
+      },
+
+      Dummy2: {
+        invoke: {
+          src: (_, events) => {
+            console.log("REACHED END 2", events)
           },
         },
       },
@@ -90,31 +96,33 @@ export const calendarMachine = createMachine(
       },
 
       checkIfGoogleCalendarPresent: async (context, event) => {
-        console.log(context, event, "checkIfGoogleCalendarPresent")
-        return false
+        const found = event.data.find(
+          (cal) => cal.summary === context.googleCalendarApi.calendarSummary
+        )
+
+        if (found === undefined) return false
+
+        context.googleCalendarApi.setGoogleCalendarId(found.id)
+        return true
       },
 
-      getGoogleCalendarEvents: async () => {
-        return []
+      getGoogleCalendarEvents: async (context) => {
+        return context.googleCalendarApi.getEvents()
       },
 
-      createGoogleCalendar: async () => {
-        return []
+      createGoogleCalendar: async (context) => {
+        await context.googleCalendarApi.createCalendar()
       },
 
-      loadAppCalendar: async () => {},
-    },
-
-    guards: {
-      "Has Google Calendar": (context, event) => {
-        return false
+      loadAppCalendar: async () => {
+        console.log("LOAD APP CALENDAR")
       },
     },
 
     actions: {
-      saveGoogleCalendarEventsToContext: assign(() => {}),
-
-      processGoogleCalendarEvents: assign(() => {}),
+      processGoogleCalendarEvents: assign((context, events) => {
+        console.log(context, events, "processGoogleCalendarEvents")
+      }),
     },
   }
 )
