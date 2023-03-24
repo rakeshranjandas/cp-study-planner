@@ -20,7 +20,11 @@ export default function Logout() {
             }}
           />
 
-          <img src={profile.picture} referrerPolicy="no-referrer" />
+          <img
+            src={profile.picture}
+            alt="Profile Pic"
+            referrerPolicy="no-referrer"
+          />
 
           <span title={profile.email} className="logout-profile-name">
             {profile.given_name}
