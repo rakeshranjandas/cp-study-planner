@@ -1,4 +1,5 @@
 import { assign, createMachine } from "xstate"
+import { GoogleCalendarAPI } from "./GoogleCalendarAPI"
 
 export const calendarMachine = createMachine(
   {
@@ -14,6 +15,8 @@ export const calendarMachine = createMachine(
       appCalendar: {
         events: [],
       },
+
+      googleCalendarApi: null,
     },
 
     states: {
@@ -28,14 +31,15 @@ export const calendarMachine = createMachine(
         invoke: {
           src: "checkIfGoogleCalendarPresent",
           onDone: [
-            {
-              target: "GoogleCalendarPresent",
-              cond: "Has Google Calendar",
-            },
+            "Dummy",
+            // {
+            //   target: "GoogleCalendarPresent",
+            //   cond: "Has Google Calendar",
+            // },
 
-            {
-              target: "GoogleCalendarAbsent",
-            },
+            // {
+            //   target: "GoogleCalendarAbsent",
+            // },
           ],
         },
       },
@@ -62,24 +66,43 @@ export const calendarMachine = createMachine(
         },
       },
 
-      ViewAppCalendar: {},
+      ViewAppCalendar: {
+        invoke: {
+          src: "loadAppCalendar",
+        },
+      },
+
+      Dummy: {
+        invoke: {
+          src: () => {
+            console.log("REACHED END")
+          },
+        },
+      },
     },
 
     initial: "Start",
   },
   {
     services: {
-      listGoogleCalendars: async () => {
-        return []
+      listGoogleCalendars: async (context) => {
+        return context.googleCalendarApi.listCalendars()
       },
 
-      checkIfGoogleCalendarPresent: async () => {
+      checkIfGoogleCalendarPresent: async (context, event) => {
+        console.log(context, event, "checkIfGoogleCalendarPresent")
         return false
       },
 
       getGoogleCalendarEvents: async () => {
         return []
       },
+
+      createGoogleCalendar: async () => {
+        return []
+      },
+
+      loadAppCalendar: async () => {},
     },
 
     guards: {
