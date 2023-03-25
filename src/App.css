@@ -57,3 +57,14 @@
     max-width: 20px;
     cursor: pointer;
 }
+
+.loader-calendar-div {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+
+.loader-calendar-img {
+    margin-top: 20%;
+}
