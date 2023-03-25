@@ -43,7 +43,6 @@ export const calendarMachine = createMachine(
           onDone: [
             {
               target: "ViewAppCalendar",
-              actions: ["processGoogleCalendarEvents"],
             },
           ],
         },
@@ -57,9 +56,24 @@ export const calendarMachine = createMachine(
       },
 
       ViewAppCalendar: {
-        invoke: {
-          src: "loadAppCalendar",
+        states: {
+          Load: {
+            invoke: {
+              src: "loadAppCalendarEvents",
+              onDone: "Show",
+            },
+          },
+
+          Show: {
+            invoke: {
+              src: () => {
+                console.log("ViewAppCalendar Show")
+              },
+            },
+          },
         },
+
+        initial: "Load",
       },
 
       Dummy: {
@@ -114,15 +128,9 @@ export const calendarMachine = createMachine(
         await context.googleCalendarApi.createCalendar()
       },
 
-      loadAppCalendar: async () => {
-        console.log("LOAD APP CALENDAR")
+      loadAppCalendarEvents: async () => {
+        console.log("loadAppCalendarEvents")
       },
-    },
-
-    actions: {
-      processGoogleCalendarEvents: assign((context, events) => {
-        console.log(context, events, "processGoogleCalendarEvents")
-      }),
     },
   }
 )
