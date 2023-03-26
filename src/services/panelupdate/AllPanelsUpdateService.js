@@ -1,3 +1,5 @@
+import { DBCalendarServices } from "../db/DBCalendarServices"
+
 export class AllPanelsUpdateService {
   singlePanelUpdateServices = []
 
@@ -6,8 +8,10 @@ export class AllPanelsUpdateService {
   }
 
   run() {
+    const allEvents = DBCalendarServices.getAllEvents()
+
     this.singlePanelUpdateServices.forEach((singlePanelUpdateService) => {
-      singlePanelUpdateService.run()
+      singlePanelUpdateService.run(allEvents)
     })
   }
 }
