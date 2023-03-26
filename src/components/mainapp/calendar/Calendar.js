@@ -52,7 +52,7 @@ export default function Calendar(props) {
   return (
     <>
       {state.matches("ViewAppCalendar.Show") ? (
-        <AppCalendar />
+        <AppCalendar appCalendarEvents={props.appCalendarEvents} />
       ) : (
         <CalendarLoader />
       )}

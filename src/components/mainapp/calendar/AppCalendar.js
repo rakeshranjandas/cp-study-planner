@@ -10,11 +10,7 @@ function createEventId() {
   return String(eventGuid++)
 }
 
-export default function AppCalendar() {
-  const [state, setState] = React.useState({
-    currentEvents: [],
-  })
-
+export default function AppCalendar(props) {
   const handleDateSelect = (selectInfo) => {
     let title = prompt("Please enter a new title for your event")
     let calendarApi = selectInfo.view.calendar
@@ -52,9 +48,7 @@ export default function AppCalendar() {
   }
 
   const handleEvents = (events) => {
-    setState({
-      currentEvents: events,
-    })
+    console.log("refresh")
   }
 
   return (
@@ -83,7 +77,7 @@ export default function AppCalendar() {
       eventRemove={function(){}}
       */
 
-        height="100%"
+        events={props.appCalendarEvents}
       />
     </div>
   )
