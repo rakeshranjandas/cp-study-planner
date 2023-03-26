@@ -2,6 +2,7 @@ import "./App.css"
 import React from "react"
 import { googleLogout, useGoogleLogin } from "@react-oauth/google"
 import { GoogleUserAPI } from "./services/google/GoogleUserAPI"
+import { LoggedUserLocalStorage } from "./services/user/LoggedUserLocalStorage"
 import MainApp from "./components/mainapp/MainApp"
 import LandingPageNoLogin from "./components/LandingPageNoLogin"
 import { UserContext } from "./context/UserContext"
@@ -20,20 +21,19 @@ function App() {
   })
 
   const logout = () => {
-    localStorage.removeItem("LOGGED_USER")
     googleLogout()
+
+    LoggedUserLocalStorage.destroy()
     setUser(null)
     setProfile(null)
   }
 
   const saveUserToLocalStorage = React.useCallback(() => {
-    localStorage.setItem("LOGGED_USER", JSON.stringify(user))
+    LoggedUserLocalStorage.save(user)
   }, [user])
 
   const getSavedUserFromLocalStorage = () => {
-    const savedUserJson = localStorage.getItem("LOGGED_USER")
-    if (!savedUserJson) return null
-    return JSON.parse(savedUserJson)
+    LoggedUserLocalStorage.get()
   }
 
   const setupProfile = React.useCallback(() => {
