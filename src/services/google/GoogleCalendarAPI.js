@@ -6,12 +6,20 @@ const GOOGLE_APIS_CALENDAR = "https://www.googleapis.com/calendar/v3/"
 export class GoogleCalendarAPI {
   _googleAuthorizationHeaders = null
 
-  _googleCalendarId = 0
-  setGoogleCalendarId = (calId) => {
-    this._googleCalendarId = calId
-  }
+  _calendarSummary = "CP-Study-Planner"
+  _googleCalendarId = "CALENDAR-ID"
 
-  calendarSummary = "CP-Study-Planner"
+  findAndSetCalendarId(googleCalendars) {
+    const found = googleCalendars.find(
+      (cal) => cal.summary === this._calendarSummary
+    )
+
+    if (found === undefined) return false
+
+    this._googleCalendarId = found.id
+
+    return true
+  }
 
   constructor(userAccessToken) {
     this._googleAuthorizationHeaders = new GoogleAuthorizationHeaders(
