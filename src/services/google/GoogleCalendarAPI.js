@@ -1,8 +1,10 @@
 import axios from "axios"
+import { GoogleAuthorizationHeaders } from "./utils/GoogleAuthorizationHeaders"
+
 const GOOGLE_APIS_CALENDAR = "https://www.googleapis.com/calendar/v3/"
 
 export class GoogleCalendarAPI {
-  _userAccessToken = null
+  _googleAuthorizationHeaders = null
 
   _googleCalendarId = 0
   setGoogleCalendarId = (calId) => {
@@ -12,14 +14,13 @@ export class GoogleCalendarAPI {
   calendarSummary = "CP-Study-Planner"
 
   constructor(userAccessToken) {
-    this._userAccessToken = userAccessToken
+    this._googleAuthorizationHeaders = new GoogleAuthorizationHeaders(
+      userAccessToken
+    )
   }
 
   _headers = () => {
-    return {
-      Authorization: `Bearer ${this._userAccessToken}`,
-      Accept: "application/json",
-    }
+    return this._googleAuthorizationHeaders.getHeaders()
   }
 
   _get = async (url) => {
