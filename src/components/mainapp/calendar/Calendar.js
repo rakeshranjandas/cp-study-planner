@@ -4,7 +4,7 @@ import { UserContext } from "../../../context/UserContext"
 import AppCalendar from "./AppCalendar"
 import CalendarLoader from "./CalendarLoader"
 import { calendarMachine } from "./calendarMachine"
-import { GoogleCalendarAPI } from "./GoogleCalendarAPI"
+import { GoogleCalendarAPI } from "../../../services/google/GoogleCalendarAPI"
 
 export default function Calendar() {
   const user = React.useContext(UserContext)
