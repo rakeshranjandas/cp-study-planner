@@ -68,3 +68,11 @@
 .loader-calendar-img {
     margin-top: 20%;
 }
+
+.app-calendar-div {
+    display: inline-block;
+    height: 95%;
+    width: 95%;
+    margin-top: 1%;
+    margin-left: 2%;
+}
