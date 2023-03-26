@@ -1,3 +1,23 @@
+/* -- Begin - Full Calendar and Bootstrap adjustments -- */
+
+:root {
+    --fc-button-bg-color: #2780e3;
+    --fc-button-border-color: #2780e3;
+    --fc-button-active-bg-color: #1f66b6;
+    --fc-button-active-border-color: #1f66b6;
+}
+
+a:not([href]) {
+    cursor: pointer;
+    color: black;
+}
+
+a:not([href]):hover {
+    text-decoration: none;
+}
+
+/* -- End - Full Calendar and Bootstrap adjustments  -- */
+
 .grid-container {
     display: grid;
     grid-template-columns: 5px repeat(10, minmax(100px, 1fr)) 5px;
