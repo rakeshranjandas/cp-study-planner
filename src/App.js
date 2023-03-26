@@ -1,7 +1,7 @@
 import "./App.css"
 import React from "react"
 import { googleLogout, useGoogleLogin } from "@react-oauth/google"
-import axios from "axios"
+import { GoogleUserAPI } from "./services/google/GoogleUserAPI"
 import MainApp from "./components/mainapp/MainApp"
 import LandingPageNoLogin from "./components/LandingPageNoLogin"
 import { UserContext } from "./context/UserContext"
@@ -13,11 +13,10 @@ function App() {
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => {
-      console.log(codeResponse)
       setUser(codeResponse)
     },
     onError: (error) => alert("Login Failed:", error),
-    scope: "https://www.googleapis.com/auth/calendar",
+    scope: GoogleUserAPI.getCalendarScope(),
   })
 
   const logout = () => {
@@ -38,24 +37,11 @@ function App() {
   }
 
   const setupProfile = React.useCallback(() => {
-    axios
-      .get(
-        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.access_token}`,
-            Accept: "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res, "res")
-        setProfile(res.data)
-      })
-      .catch((err) => {
-        console.log(err)
-        logout()
-      })
+    GoogleUserAPI.getProfile(
+      user.access_token,
+      (profileData) => setProfile(profileData),
+      () => logout()
+    )
   }, [user])
 
   React.useEffect(() => {
