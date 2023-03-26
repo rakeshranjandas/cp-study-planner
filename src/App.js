@@ -28,13 +28,13 @@ function App() {
     setProfile(null)
   }
 
-  const saveUserToLocalStorage = React.useCallback(() => {
-    LoggedUserLocalStorage.save(user)
-  }, [user])
+  const saveUserToLocalStorage = React.useCallback((toSaveUser) => {
+    LoggedUserLocalStorage.save(toSaveUser)
+  }, [])
 
-  const getSavedUserFromLocalStorage = () => {
-    LoggedUserLocalStorage.get()
-  }
+  const getSavedUserFromLocalStorage = React.useCallback(() => {
+    return LoggedUserLocalStorage.get()
+  }, [])
 
   const setupProfile = React.useCallback(() => {
     GoogleUserAPI.getProfile(
@@ -46,7 +46,7 @@ function App() {
 
   React.useEffect(() => {
     if (user) {
-      saveUserToLocalStorage()
+      saveUserToLocalStorage(user)
       setupProfile()
     } else {
       const savedUser = getSavedUserFromLocalStorage()
