@@ -96,3 +96,34 @@ a:not([href]):hover {
     margin-top: 1%;
     margin-left: 2%;
 }
+
+.app-calendar-add-edit-event-bg {
+    position: absolute;
+    z-index: 1;
+    background-color: rgba(0,0,0,0.5);
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.app-calendar-add-edit-event {
+    position: absolute;
+    z-index: 2;
+    top: 15%;
+    left: 30%;
+    height: 70%;
+    width: 40%;
+    background-color: white;
+}
+
+.app-calendar-add-edit-event-header {
+    display: inline-block;
+}
+
+.app-calendar-add-edit-event-close {
+    float: right;
+    border: 1px solid #1f66b6;
+    padding: 5px;
+    cursor: pointer;
+}

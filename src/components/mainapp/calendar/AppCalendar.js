@@ -4,6 +4,7 @@ import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid"
 import timeGridPlugin from "@fullcalendar/timegrid"
 import interactionPlugin from "@fullcalendar/interaction"
+import AddEditEventForm from "./AddEditEventForm"
 
 let eventGuid = 0
 function createEventId() {
@@ -11,21 +12,27 @@ function createEventId() {
 }
 
 export default function AppCalendar(props) {
+  const [addEditEvent, setAddEditEvent] = React.useState(null)
+  const [showAddEditForm, setShowAddEditForm] = React.useState(false)
+
   const handleDateSelect = (selectInfo) => {
-    let title = prompt("Please enter a new title for your event")
-    let calendarApi = selectInfo.view.calendar
+    setAddEditEvent(null)
+    setShowAddEditForm(true)
 
-    calendarApi.unselect() // clear date selection
+    // let title = prompt("Please enter a new title for your event")
+    // let calendarApi = selectInfo.view.calendar
 
-    if (title) {
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay,
-      })
-    }
+    // calendarApi.unselect() // clear date selection
+
+    // if (title) {
+    //   calendarApi.addEvent({
+    //     id: createEventId(),
+    //     title,
+    //     start: selectInfo.startStr,
+    //     end: selectInfo.endStr,
+    //     allDay: selectInfo.allDay,
+    //   })
+    // }
   }
 
   const renderEventContent = (eventInfo) => {
@@ -38,13 +45,16 @@ export default function AppCalendar(props) {
   }
 
   const handleEventClick = (clickInfo) => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete the event '${clickInfo.event.title}'`
-      )
-    ) {
-      clickInfo.event.remove()
-    }
+    setAddEditEvent(clickInfo.event)
+    setShowAddEditForm(true)
+
+    // if (
+    //   window.confirm(
+    //     `Are you sure you want to delete the event '${clickInfo.event.title}'`
+    //   )
+    // ) {
+    //   clickInfo.event.remove()
+    // }
   }
 
   const handleEvents = (events) => {
@@ -71,14 +81,19 @@ export default function AppCalendar(props) {
         eventContent={renderEventContent} // custom render function
         eventClick={handleEventClick}
         eventsSet={handleEvents} // called after events are initialized/added/changed/removed
-        /* you can update a remote database when these fire:
-      eventAdd={function(){}}
+        // you can update a remote database when these fire:
+        eventAdd={handleEventAdd}
       eventChange={function(){}}
       eventRemove={function(){}}
       */
 
         events={props.appCalendarEvents}
-      />
+      {showAddEditForm && (
+        <AddEditEventForm
+          addEditEvent={addEditEvent}
+          setShowAddEditForm={setShowAddEditForm}
+        />
+      )}
     </div>
   )
 }
