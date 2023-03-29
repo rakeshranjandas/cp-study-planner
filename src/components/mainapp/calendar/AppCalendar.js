@@ -18,16 +18,16 @@ export default function AppCalendar(props) {
 
   const handleDateSelect = (selectInfo) => {
     setAddEditEvent({
-      start: selectInfo.startStr,
-      end: selectInfo.endStr,
+      startStr: selectInfo.startStr,
+      endStr: selectInfo.endStr,
       allDay: selectInfo.allDay,
     })
 
-    setAddEditSubmitHandler(() => (addEditInput) => {
-      console.log("addEditInput", addEditInput)
+    setAddEditSubmitHandler(() => (addInput) => {
+      console.log("addInput", addInput)
 
       props.calendarService
-        .addGoogleCalendarEvent(addEditInput)
+        .addGoogleCalendarEvent(addInput)
         .then((addedEvent) => {
           selectInfo.view.calendar.addEvent(addedEvent)
           setShowAddEditForm(false)
@@ -66,8 +66,24 @@ export default function AppCalendar(props) {
 
   const handleEventClick = (clickInfo) => {
     setAddEditEvent(clickInfo.event)
-    setShowAddEditForm(true)
 
+    setAddEditSubmitHandler(() => (editInput) => {
+      console.log("editInput", editInput)
+
+      props.calendarService
+        .updateGoogleCalendarEvent(editInput)
+        .then((updatedEvent) => {
+          console.log(updatedEvent)
+          clickInfo.event.remove()
+          clickInfo.view.calendar.addEvent(updatedEvent)
+          setShowAddEditForm(false)
+        })
+        .catch((err) => {
+          alert("Some error.")
+        })
+    })
+
+    setShowAddEditForm(true)
     // if (
     //   window.confirm(
     //     `Are you sure you want to delete the event '${clickInfo.event.title}'`

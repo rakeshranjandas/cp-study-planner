@@ -61,4 +61,19 @@ export class CalendarService {
 
     return googleCalendarEventToAppCalendarEvent(googleCalendarEventAdded)
   }
+
+  async updateGoogleCalendarEvent(appEvent) {
+    const googleCalendarEvent = appCalendarEventToGoogleCalendarEvent(appEvent)
+    const googleCalendarEventId = appEvent.id
+
+    const googleCalendarEventUpdated =
+      await this.googleCalendarAPIInstance.updateEvent(
+        googleCalendarEvent,
+        googleCalendarEventId
+      )
+
+    console.log(googleCalendarEventUpdated, "googleCalendarEventUpdated")
+
+    return googleCalendarEventToAppCalendarEvent(googleCalendarEventUpdated)
+  }
 }

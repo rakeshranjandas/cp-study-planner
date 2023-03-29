@@ -43,6 +43,12 @@ export class GoogleCalendarAPI {
     })
   }
 
+  _put = async (url, body) => {
+    return axios.put(GOOGLE_APIS_CALENDAR + url, body, {
+      headers: this._headers(),
+    })
+  }
+
   listCalendars = async () => {
     const response = await this._get("users/me/calendarList")
     return response.data.items
@@ -65,6 +71,15 @@ export class GoogleCalendarAPI {
   addEvent = async (googleCalendarEvent) => {
     const response = await this._post(
       `calendars/${this._googleCalendarId}/events`,
+      googleCalendarEvent
+    )
+
+    return response.data
+  }
+
+  updateEvent = async (googleCalendarEvent, googleCalendarEventId) => {
+    const response = await this._put(
+      `calendars/${this._googleCalendarId}/events/${googleCalendarEventId}`,
       googleCalendarEvent
     )
 

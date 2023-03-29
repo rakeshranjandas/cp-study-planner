@@ -2,9 +2,10 @@ import React from "react"
 
 export default function AddEditEventForm(props) {
   const [curEvent, setCurEvent] = React.useState({
-    start: props.addEditEvent.start.substr(0, 16),
-    end: props.addEditEvent.end.substr(0, 16),
-    title: "",
+    start: props.addEditEvent.startStr.substr(0, 16),
+    end: props.addEditEvent.endStr.substr(0, 16),
+    title: props.addEditEvent.title ?? "",
+    ...(props.addEditEvent.id && { id: props.addEditEvent.id }),
   })
 
   return (
@@ -66,7 +67,7 @@ export default function AddEditEventForm(props) {
                   props.addEditSubmitHandler({ ...curEvent })
                 }}
               >
-                Add
+                {curEvent.id ? "Edit" : "Add"}
               </button>
             </p>
           </form>
