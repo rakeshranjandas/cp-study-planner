@@ -54,6 +54,7 @@ export default function Calendar(props) {
       {state.matches("ViewAppCalendar.Show") ? (
         <AppCalendar
           appCalendarEvents={props.appCalendarEvents}
+          setAppCalendarEvents={props.setAppCalendarEvents}
           calendarService={calendarService}
         />
       ) : (

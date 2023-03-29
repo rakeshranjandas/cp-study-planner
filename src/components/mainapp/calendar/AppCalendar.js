@@ -1,22 +1,33 @@
 import React from "react"
-import { formatDate } from "@fullcalendar/core"
 import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid"
 import timeGridPlugin from "@fullcalendar/timegrid"
 import interactionPlugin from "@fullcalendar/interaction"
 import AddEditEventForm from "./AddEditEventForm"
 
-let eventGuid = 0
-function createEventId() {
-  return String(eventGuid++)
-}
-
 export default function AppCalendar(props) {
   const [addEditEvent, setAddEditEvent] = React.useState(null)
   const [showAddEditForm, setShowAddEditForm] = React.useState(false)
   const [addEditSubmitHandler, setAddEditSubmitHandler] = React.useState(null)
+  const fullCalendarRef = React.createRef()
+
+  const addAppCalendarEvent = (addedEvent) => {
+    props.setAppCalendarEvents([...props.appCalendarEvents, addedEvent])
+  }
+
+  const deleteAppCalendarEvent = (id) => {
+    props.setAppCalendarEvents(
+      props.appCalendarEvents.filter((appEvent) => appEvent.id !== id)
+    )
+  }
+
+  const editAppCalendarEvent = (updatedEvent, eventId) => {
+    deleteAppCalendarEvent(eventId)
+    addAppCalendarEvent(updatedEvent)
+  }
 
   const handleDateSelect = (selectInfo) => {
+    console.log(fullCalendarRef.current.getApi().addEvent)
     setAddEditEvent({
       startStr: selectInfo.startStr,
       endStr: selectInfo.endStr,
@@ -29,30 +40,17 @@ export default function AppCalendar(props) {
       props.calendarService
         .addGoogleCalendarEvent(addInput)
         .then((addedEvent) => {
-          selectInfo.view.calendar.addEvent(addedEvent)
+          console.log(addedEvent)
+          addAppCalendarEvent(addedEvent)
           setShowAddEditForm(false)
         })
         .catch((err) => {
+          console.log(err)
           alert("Some error.")
         })
     })
 
     setShowAddEditForm(true)
-
-    // let title = prompt("Please enter a new title for your event")
-    // let calendarApi = selectInfo.view.calendar
-
-    // calendarApi.unselect() // clear date selection
-
-    // if (title) {
-    //   calendarApi.addEvent({
-    //     id: createEventId(),
-    //     title,
-    //     start: selectInfo.startStr,
-    //     end: selectInfo.endStr,
-    //     allDay: selectInfo.allDay,
-    //   })
-    // }
   }
 
   const renderEventContent = (eventInfo) => {
@@ -74,8 +72,7 @@ export default function AppCalendar(props) {
         .updateGoogleCalendarEvent(editInput)
         .then((updatedEvent) => {
           console.log(updatedEvent)
-          clickInfo.event.remove()
-          clickInfo.view.calendar.addEvent(updatedEvent)
+          editAppCalendarEvent(updatedEvent, editInput.id)
           setShowAddEditForm(false)
         })
         .catch((err) => {
@@ -84,25 +81,37 @@ export default function AppCalendar(props) {
     })
 
     setShowAddEditForm(true)
-    // if (
-    //   window.confirm(
-    //     `Are you sure you want to delete the event '${clickInfo.event.title}'`
-    //   )
-    // ) {
-    //   clickInfo.event.remove()
-    // }
+  }
+
+  const deleteEventHandler = (id) => {
+    props.calendarService
+      .deleteGoogleCalendarEvent(id)
+      .then(() => {
+        deleteAppCalendarEvent(id)
+        setShowAddEditForm(false)
+      })
+      .catch((err) => {
+        alert("Some error.")
+      })
   }
 
   const handleEvents = (events) => {
     console.log("refresh")
   }
 
+  const handleEventAdd = (event) => {
+    console.log("Added ", event)
+    // event.revert
+  }
+
   return (
     <div className="app-calendar-div">
       <FullCalendar
+        ref={fullCalendarRef}
+        height="100%"
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         headerToolbar={{
-          left: "prev,next today",
+          left: "prev,next today addNewEvent",
           center: "title",
           right: "dayGridMonth,timeGridWeek,timeGridDay",
         }}
@@ -112,23 +121,36 @@ export default function AppCalendar(props) {
         selectMirror={true}
         dayMaxEvents={true}
         weekends={true}
-        //   initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
+        // initialEvents={state.currentEvents} // alternatively, use the `events` setting to fetch from a feed
+        // events={() => events}
         select={handleDateSelect}
         eventContent={renderEventContent} // custom render function
         eventClick={handleEventClick}
         eventsSet={handleEvents} // called after events are initialized/added/changed/removed
         // you can update a remote database when these fire:
         eventAdd={handleEventAdd}
-      eventChange={function(){}}
-      eventRemove={function(){}}
-      */
+        eventChange={function () {}}
+        eventRemove={function () {}}
+        //
 
         events={props.appCalendarEvents}
+
+        // customButtons={{
+        //   addNewEvent: {
+        //     text: "addNewEvent",
+        //     click: function () {
+        //       addNewEvent()
+        //     },
+        //   },
+        // }}
+      />
+
       {showAddEditForm && (
         <AddEditEventForm
           addEditEvent={addEditEvent}
           setShowAddEditForm={setShowAddEditForm}
           addEditSubmitHandler={addEditSubmitHandler}
+          deleteEventHandler={deleteEventHandler}
         />
       )}
     </div>

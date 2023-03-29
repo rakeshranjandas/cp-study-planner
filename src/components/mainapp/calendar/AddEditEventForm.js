@@ -69,6 +69,18 @@ export default function AddEditEventForm(props) {
               >
                 {curEvent.id ? "Edit" : "Add"}
               </button>
+
+              {curEvent.id && (
+                <button
+                  style={{ marginLeft: "15px" }}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    props.deleteEventHandler(curEvent.id)
+                  }}
+                >
+                  Delete Event
+                </button>
+              )}
             </p>
           </form>
         </div>
