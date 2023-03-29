@@ -1,5 +1,8 @@
 import { DBCalendarServices } from "../db/DBCalendarServices"
-import { googleCalendarEventToAppCalendarEvent } from "./EventConvertor"
+import {
+  googleCalendarEventToAppCalendarEvent,
+  appCalendarEventToGoogleCalendarEvent,
+} from "./EventConvertor"
 
 export class CalendarService {
   panelsUpdater = null
@@ -37,10 +40,25 @@ export class CalendarService {
         googleCalendarEventToAppCalendarEvent(googleCalendarEvent)
       ) ?? []
 
+    console.log(appCalendarEvents, "appCalendarEvents")
+
     DBCalendarServices.loadAllEvents(appCalendarEvents)
 
     this.panelsUpdater.run()
 
     this.setAppCalendarEvents(appCalendarEvents)
+  }
+
+  async addGoogleCalendarEvent(appEvent) {
+    const googleCalendarEvent = appCalendarEventToGoogleCalendarEvent(appEvent)
+
+    console.log(googleCalendarEvent, "googleCalendarEvent")
+
+    const googleCalendarEventAdded =
+      await this.googleCalendarAPIInstance.addEvent(googleCalendarEvent)
+
+    console.log(googleCalendarEventAdded, "googleCalendarEventAdded")
+
+    return googleCalendarEventToAppCalendarEvent(googleCalendarEventAdded)
   }
 }
