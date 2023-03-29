@@ -2,9 +2,13 @@ import { AbstractSinglePanelUpdateService } from "./AbstractSinglePanelUpdateSer
 
 export class BacklogPanelUpdateService extends AbstractSinglePanelUpdateService {
   filterLogic(allEvents = []) {
-    const backlogEvents = allEvents.filter((event) => event.id < 5)
+    const todayDate = new Date(new Date().setHours(0, 0, 0, 0))
+    const backlogEvents = allEvents.filter((event) => {
+      const eventDate = new Date(event.start)
+      return eventDate < todayDate
+    })
 
-    console.log("Filtering for backlog panel", allEvents, backlogEvents)
+    console.log("Filtering for backlog panel", backlogEvents)
 
     return backlogEvents
   }
