@@ -9,7 +9,7 @@ export class GoogleCalendarAPI {
   _calendarSummary = "CP-Study-Planner"
   _googleCalendarId = "CALENDAR-ID"
 
-  findAndSetCalendarId(googleCalendars) {
+  findAndSetCalendarId = (googleCalendars) => {
     const found = googleCalendars.find(
       (cal) => cal.summary === this._calendarSummary
     )
