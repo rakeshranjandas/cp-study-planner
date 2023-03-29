@@ -76,4 +76,8 @@ export class CalendarService {
 
     return googleCalendarEventToAppCalendarEvent(googleCalendarEventUpdated)
   }
+
+  async deleteGoogleCalendarEvent(googleCalendarEventId) {
+    await this.googleCalendarAPIInstance.deleteEvent(googleCalendarEventId)
+  }
 }

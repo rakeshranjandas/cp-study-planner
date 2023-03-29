@@ -43,6 +43,12 @@ export class GoogleCalendarAPI {
     })
   }
 
+  _delete = async (url) => {
+    return axios.delete(GOOGLE_APIS_CALENDAR + url, {
+      headers: this._headers(),
+    })
+  }
+
   _put = async (url, body) => {
     return axios.put(GOOGLE_APIS_CALENDAR + url, body, {
       headers: this._headers(),
@@ -84,5 +90,13 @@ export class GoogleCalendarAPI {
     )
 
     return response.data
+  }
+
+  deleteEvent = async (googleCalendarEventId) => {
+    const response = await this._delete(
+      `calendars/${this._googleCalendarId}/events/${googleCalendarEventId}`
+    )
+
+    return response
   }
 }
