@@ -24,8 +24,14 @@ export default function AppCalendar(props) {
   }
 
   const editAppCalendarEvent = (updatedEvent, eventId) => {
-    deleteAppCalendarEvent(eventId)
-    addAppCalendarEvent(updatedEvent)
+    props.setAppCalendarEvents((prevAppEventsList) => {
+      const foundIndex = props.appCalendarEvents.findIndex(
+        (appEvent) => appEvent.id === eventId
+      )
+      let copyAppEventsList = [...prevAppEventsList]
+      copyAppEventsList[foundIndex] = updatedEvent
+      return copyAppEventsList
+    })
   }
 
   const handleDateSelect = (selectInfo) => {
