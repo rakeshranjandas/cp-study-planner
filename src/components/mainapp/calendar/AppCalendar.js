@@ -4,12 +4,14 @@ import dayGridPlugin from "@fullcalendar/daygrid"
 import timeGridPlugin from "@fullcalendar/timegrid"
 import interactionPlugin from "@fullcalendar/interaction"
 import AddEditEventForm from "./AddEditEventForm"
+import { LoaderContext } from "../../../context/LoaderContext"
 
 export default function AppCalendar(props) {
   const [addEditEvent, setAddEditEvent] = React.useState(null)
   const [showAddEditForm, setShowAddEditForm] = React.useState(false)
   const [addEditSubmitHandler, setAddEditSubmitHandler] = React.useState(null)
   const fullCalendarRef = React.createRef()
+  const loader = React.useContext(LoaderContext)
 
   const addAppCalendarEvent = (addedEvent) => {
     props.setAppCalendarEvents([...props.appCalendarEvents, addedEvent])
@@ -36,6 +38,7 @@ export default function AppCalendar(props) {
 
     setAddEditSubmitHandler(() => (addInput) => {
       console.log("addInput", addInput)
+      loader.show()
 
       props.calendarService
         .addGoogleCalendarEvent(addInput)
@@ -43,6 +46,7 @@ export default function AppCalendar(props) {
           console.log(addedEvent)
           addAppCalendarEvent(addedEvent)
           setShowAddEditForm(false)
+          loader.hide()
         })
         .catch((err) => {
           console.log(err)
@@ -67,6 +71,7 @@ export default function AppCalendar(props) {
 
     setAddEditSubmitHandler(() => (editInput) => {
       console.log("editInput", editInput)
+      loader.show()
 
       props.calendarService
         .updateGoogleCalendarEvent(editInput)
@@ -74,6 +79,7 @@ export default function AppCalendar(props) {
           console.log(updatedEvent)
           editAppCalendarEvent(updatedEvent, editInput.id)
           setShowAddEditForm(false)
+          loader.hide()
         })
         .catch((err) => {
           alert("Some error.")
@@ -84,11 +90,14 @@ export default function AppCalendar(props) {
   }
 
   const deleteEventHandler = (id) => {
+    loader.show()
+
     props.calendarService
       .deleteGoogleCalendarEvent(id)
       .then(() => {
         deleteAppCalendarEvent(id)
         setShowAddEditForm(false)
+        loader.hide()
       })
       .catch((err) => {
         alert("Some error.")

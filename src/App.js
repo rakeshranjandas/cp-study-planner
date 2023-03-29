@@ -7,6 +7,8 @@ import MainApp from "./components/mainapp/MainApp"
 import LandingPageNoLogin from "./components/LandingPageNoLogin"
 import { UserContext } from "./context/UserContext"
 import { ProfileContext } from "./context/ProfileContext"
+import { LoaderContext } from "./context/LoaderContext"
+import Loader from "./components/common/Loader"
 
 function App() {
   const [user, setUser] = React.useState(null)
@@ -54,17 +56,32 @@ function App() {
     }
   }, [user, saveUserToLocalStorage, setupProfile])
 
+  const [showLoader, setShowLoader] = React.useState(false)
+
+  const showLoaderFn = () => {
+    setShowLoader(true)
+  }
+
+  const hideLoaderFn = () => {
+    setShowLoader(false)
+  }
+
   return (
     <>
-      {user ? (
-        <UserContext.Provider value={{ user: user, logout: logout }}>
-          <ProfileContext.Provider value={profile}>
+      <LoaderContext.Provider
+        value={{ show: showLoaderFn, hide: hideLoaderFn }}
+      >
+        {user ? (
+          <UserContext.Provider value={{ user: user, logout: logout }}>
+            <ProfileContext.Provider value={profile}>
             <MainApp />
           </ProfileContext.Provider>
         </UserContext.Provider>
-      ) : (
-        <LandingPageNoLogin login={login} />
-      )}
+        ) : (
+          <LandingPageNoLogin login={login} />
+        )}
+      </LoaderContext.Provider>
+      <Loader showLoader={showLoader} />
     </>
   )
 }
