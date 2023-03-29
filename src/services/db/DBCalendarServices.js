@@ -12,4 +12,16 @@ export const DBCalendarServices = {
   loadAllEvents: (allEvents = []) => {
     DBSingleton.getInstance().load(allEvents)
   },
+
+  addEvent: (newEvent) => {
+    DBSingleton.getInstance().add(newEvent)
+  },
+
+  updateEvent: (updatedEvent) => {
+    DBSingleton.getInstance().update(updatedEvent)
+  },
+
+  deleteEvent: (id) => {
+    DBSingleton.getInstance().delete(id)
+  },
 }

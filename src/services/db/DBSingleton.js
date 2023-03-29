@@ -15,17 +15,24 @@ function initialiseDBInstance() {
 const DUMMY_DB_INSTANCE = {
   store: [],
 
+  load: function (eList) {
+    this.store = [...eList]
+  },
+
   add: function (e) {
-    console.log("db Instance ADD ", e)
     this.store.push(e)
   },
 
   get: function (e) {
-    console.log("db Instance GET ", e)
     return [...this.store]
   },
 
-  load: function (eList) {
-    this.store = [...eList]
+  update: function (e) {
+    const idx = this.store.findIndex((x) => x.id === e.id)
+    this.store[idx] = e
+  },
+
+  delete: function (id) {
+    this.store = this.store.filter((x) => x.id !== id)
   },
 }
