@@ -99,7 +99,7 @@ a:not([href]):hover {
 
 .app-calendar-add-edit-event-bg {
     position: absolute;
-    z-index: 1;
+    z-index: 5;
     background-color: rgba(0,0,0,0.5);
     top: 0;
     left: 0;
