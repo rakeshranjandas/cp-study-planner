@@ -2,8 +2,8 @@ import React from "react"
 
 export default function AddEditEventForm(props) {
   const [curEvent, setCurEvent] = React.useState({
-    start: props.addEditEvent.startStr.substr(0, 16),
-    end: props.addEditEvent.endStr.substr(0, 16),
+    start: (props.addEditEvent.startStr + "T00:00").substr(0, 16), // All-day startStr only contains date
+    end: (props.addEditEvent.endStr + "T00:00").substr(0, 16),
     title: props.addEditEvent.title ?? "",
     ...(props.addEditEvent.id && { id: props.addEditEvent.id }),
   })
