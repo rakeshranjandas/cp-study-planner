@@ -19,7 +19,7 @@ export default function Calendar(props) {
         ),
         setAppCalendarEvents: props.setAppCalendarEvents,
       }),
-    []
+    [props.panelsUpdater, props.setAppCalendarEvents, user.user.access_token]
   )
 
   const [state, send] = useMachine(calendarMachine, {
@@ -52,7 +52,10 @@ export default function Calendar(props) {
   return (
     <>
       {state.matches("ViewAppCalendar.Show") ? (
-        <AppCalendar appCalendarEvents={props.appCalendarEvents} />
+        <AppCalendar
+          appCalendarEvents={props.appCalendarEvents}
+          calendarService={calendarService}
+        />
       ) : (
         <CalendarLoader />
       )}
