@@ -3,28 +3,30 @@ export function googleCalendarEventToAppCalendarEvent(googleCalendarEvent) {
   return {
     id: googleCalendarEvent.id,
     title: googleCalendarEvent.summary,
-    start:
-      googleCalendarEvent.start.date ??
-      dateConvertTimezone(
-        googleCalendarEvent.start.dateTime,
-        googleCalendarEvent.start.timeZone
-      ),
-    end:
-      googleCalendarEvent.end.date ??
-      dateConvertTimezone(
-        googleCalendarEvent.end.dateTime,
-        googleCalendarEvent.end.timeZone
-      ),
+    start: googleCalendarEvent.start.date ?? googleCalendarEvent.start.dateTime,
+    end: googleCalendarEvent.end.date ?? googleCalendarEvent.end.dateTime,
+    allDay: !!googleCalendarEvent.start.date,
+
     googleCalendarEvent: googleCalendarEvent,
   }
 }
 
 export function appCalendarEventToGoogleCalendarEvent(appCalendarEvent) {
-  return {}
-}
+  return {
+    start: {
+      ...(appCalendarEvent.allDay && { date: appCalendarEvent.start }),
+      ...(!appCalendarEvent.allDay && {
+        dateTime: new Date(appCalendarEvent.start).toISOString(),
+      }),
+    },
 
-function dateConvertTimezone(dateStr, toTimezoneStr) {
-  return new Date(
-    new Date(dateStr).toLocaleString("en-US", { timeZone: toTimezoneStr })
-  ).toISOString()
+    end: {
+      ...(appCalendarEvent.allDay && { date: appCalendarEvent.end }),
+      ...(!appCalendarEvent.allDay && {
+        dateTime: new Date(appCalendarEvent.end).toISOString(),
+      }),
+    },
+
+    summary: appCalendarEvent.title,
+  }
 }
