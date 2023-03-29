@@ -111,7 +111,7 @@ export default function AppCalendar(props) {
         height="100%"
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         headerToolbar={{
-          left: "prev,next today addNewEvent",
+          left: "prev,next today",
           center: "title",
           right: "dayGridMonth,timeGridWeek,timeGridDay",
         }}
