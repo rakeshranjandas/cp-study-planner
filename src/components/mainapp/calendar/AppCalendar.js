@@ -14,9 +14,29 @@ function createEventId() {
 export default function AppCalendar(props) {
   const [addEditEvent, setAddEditEvent] = React.useState(null)
   const [showAddEditForm, setShowAddEditForm] = React.useState(false)
+  const [addEditSubmitHandler, setAddEditSubmitHandler] = React.useState(null)
 
   const handleDateSelect = (selectInfo) => {
-    setAddEditEvent(null)
+    setAddEditEvent({
+      start: selectInfo.startStr,
+      end: selectInfo.endStr,
+      allDay: selectInfo.allDay,
+    })
+
+    setAddEditSubmitHandler(() => (addEditInput) => {
+      console.log("addEditInput", addEditInput)
+
+      props.calendarService
+        .addGoogleCalendarEvent(addEditInput)
+        .then((addedEvent) => {
+          selectInfo.view.calendar.addEvent(addedEvent)
+          setShowAddEditForm(false)
+        })
+        .catch((err) => {
+          alert("Some error.")
+        })
+    })
+
     setShowAddEditForm(true)
 
     // let title = prompt("Please enter a new title for your event")
@@ -92,6 +112,7 @@ export default function AppCalendar(props) {
         <AddEditEventForm
           addEditEvent={addEditEvent}
           setShowAddEditForm={setShowAddEditForm}
+          addEditSubmitHandler={addEditSubmitHandler}
         />
       )}
     </div>
