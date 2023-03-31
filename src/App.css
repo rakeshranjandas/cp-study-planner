@@ -139,3 +139,7 @@ a:not([href]):hover {
 .app-calendar-event-pending {
     background-color: rgb(241, 172, 172);
 }
+
+.filter-div {
+    padding: 1%;
+}

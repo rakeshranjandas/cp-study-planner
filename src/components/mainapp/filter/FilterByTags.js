@@ -9,7 +9,7 @@ export default function FilterByTags(props) {
   }
 
   return (
-    <div>
+    <div className="filter-div">
       <FilterByTagsBar onChange={filterAppCalendarEvents} />
     </div>
   )
