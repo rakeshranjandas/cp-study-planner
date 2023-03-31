@@ -24,4 +24,8 @@ export const DBCalendarServices = {
   deleteEvent: (id) => {
     DBSingleton.getInstance().delete(id)
   },
+
+  getAllTags: () => {
+    return DBSingleton.getInstance().getTags()
+  },
 }

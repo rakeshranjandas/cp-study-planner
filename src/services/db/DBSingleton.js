@@ -35,4 +35,15 @@ const DUMMY_DB_INSTANCE = {
   delete: function (id) {
     this.store = this.store.filter((x) => x.id !== id)
   },
+
+  getTags: function () {
+    const tagSet = new Set()
+    this.store.forEach((e) => {
+      e?.properties?.tags?.forEach((tag) => {
+        tagSet.add(tag)
+      })
+    })
+
+    return Array.from(tagSet)
+  },
 }

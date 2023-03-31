@@ -1,4 +1,5 @@
 import React from "react"
+import AddEditEventTagSelect from "./AddEditEventTagSelect"
 
 export default function AddEditEventForm(props) {
   const [curEvent, setCurEvent] = React.useState({
@@ -6,6 +7,7 @@ export default function AddEditEventForm(props) {
     end: (props.addEditEvent.endStr + "T00:00").substr(0, 16),
     title: props.addEditEvent.title ?? "",
     description: props.addEditEvent.description ?? "",
+    properties: props.addEditEvent.properties ?? {},
     ...(props.addEditEvent.id && { id: props.addEditEvent.id }),
   })
 
@@ -67,6 +69,13 @@ export default function AddEditEventForm(props) {
                 }
               />
             </p>
+
+            <div>
+              <label>Tags:</label>
+              <AddEditEventTagSelect
+                selectedOptionValuesList={curEvent?.properties?.tags}
+              />
+            </div>
 
             <p>
               <button
