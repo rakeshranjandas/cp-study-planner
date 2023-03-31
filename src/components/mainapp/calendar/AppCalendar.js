@@ -73,7 +73,11 @@ export default function AppCalendar(props) {
   }
 
   const handleEventClick = (clickInfo) => {
-    setAddEditEvent(clickInfo.event)
+    setAddEditEvent(
+      props.appCalendarEvents.find(
+        (appCalendarEvent) => appCalendarEvent.id === clickInfo.event.id
+      )
+    )
 
     setAddEditSubmitHandler(() => (editInput) => {
       console.log("editInput", editInput)
