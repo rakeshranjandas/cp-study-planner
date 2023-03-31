@@ -1,10 +1,24 @@
 import React from "react"
 import AddEditEventTagSelect from "./AddEditEventTagSelect"
 
+function getHTMLDateTimeValue(dateTime) {
+  if (!dateTime.includes("T")) return dateTime + "T00:00"
+
+  const d = new Date(dateTime)
+
+  const f2 = (val) => ("0" + val).slice(-2)
+
+  const formatted =
+    `${d.getFullYear()}-${f2(d.getMonth() + 1)}-${f2(d.getDate())}` +
+    `T${f2(d.getHours())}:${f2(d.getMinutes())}`
+
+  return formatted
+}
+
 export default function AddEditEventForm(props) {
   const [curEvent, setCurEvent] = React.useState({
-    start: (props.addEditEvent.start + "T00:00").substr(0, 16), // All-day startStr only contains date
-    end: (props.addEditEvent.end + "T00:00").substr(0, 16),
+    start: getHTMLDateTimeValue(props.addEditEvent.start), // All-day startStr only contains date
+    end: getHTMLDateTimeValue(props.addEditEvent.end),
     title: props.addEditEvent.title ?? "",
     description: props.addEditEvent.description ?? "",
     properties: props.addEditEvent.properties ?? {},
