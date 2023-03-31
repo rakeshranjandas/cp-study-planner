@@ -6,6 +6,7 @@ import BacklogEventsPanel from "./panel/BacklogEventsPanel"
 import { AllPanelsUpdateService } from "../../services/panelupdate/AllPanelsUpdateService"
 import { TodayPanelUpdateService } from "../../services/panelupdate/TodayPanelUpdateService"
 import { BacklogPanelUpdateService } from "../../services/panelupdate/BacklogPanelUpdateService"
+import Search from "./search/Search"
 
 export default function MainApp() {
   const [appCalendarEvents, setAppCalendarEvents] = React.useState([])
@@ -34,7 +35,9 @@ export default function MainApp() {
       </div>
 
       <div className="grid-item item-session">Session 5</div>
-      <div className="grid-item item-search">Search 6</div>
+      <div className="grid-item item-search">
+        <Search />
+      </div>
 
       <div className="grid-item item-today-panel">
         <TodayEventsPanel events={todayEvents} />
