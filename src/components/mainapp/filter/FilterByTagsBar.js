@@ -22,7 +22,7 @@ export default function FilterByTagsBar(props) {
       isMulti
       name="colors"
       options={options}
-      placeholder="Search by tags..."
+      placeholder="Filter by tags..."
       onChange={changeSelectedOptions}
     />
   )
