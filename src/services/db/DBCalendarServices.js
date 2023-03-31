@@ -26,9 +26,6 @@ export const DBCalendarServices = {
   },
 
   getAllTags: () => {
-    const allTags = DBSingleton.getInstance().getTags()
-    allTags.push("done")
-
-    return allTags
+    return DBSingleton.getInstance().getTags()
   },
 }
