@@ -122,6 +122,30 @@ export default function AppCalendar(props) {
     // event.revert
   }
 
+  const appCalendarEventsColored = React.useMemo(
+    () =>
+      props.appCalendarEvents.map((appCalendarEvent) => {
+        const appCalendarEventCopy = JSON.parse(
+          JSON.stringify(appCalendarEvent)
+        )
+
+        appCalendarEventCopy.classNames = ["app-calendar-event"]
+
+        if (new Date(appCalendarEventCopy.start) < new Date()) {
+          if (
+            appCalendarEventCopy.properties &&
+            appCalendarEventCopy.properties.done
+          )
+            appCalendarEventCopy.classNames.push("app-calendar-event-done")
+          else
+            appCalendarEventCopy.classNames.push("app-calendar-event-pending")
+        }
+
+        return appCalendarEventCopy
+      }),
+    [props.appCalendarEvents]
+  )
+
   return (
     <div className="app-calendar-div">
       <FullCalendar
@@ -151,7 +175,7 @@ export default function AppCalendar(props) {
         eventRemove={function () {}}
         //
 
-        events={props.appCalendarEvents}
+        events={appCalendarEventsColored}
 
         // customButtons={{
         //   addNewEvent: {

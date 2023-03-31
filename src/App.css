@@ -127,3 +127,15 @@ a:not([href]):hover {
     padding: 5px;
     cursor: pointer;
 }
+
+.app-calendar-event i {
+    color: black;
+}
+
+.app-calendar-event-done {
+    background-color: rgb(196, 253, 196);
+}
+
+.app-calendar-event-pending {
+    background-color: rgb(241, 172, 172);
+}
