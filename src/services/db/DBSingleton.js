@@ -23,8 +23,18 @@ const DUMMY_DB_INSTANCE = {
     this.store.push(e)
   },
 
-  get: function (e) {
-    return [...this.store]
+  get: function (tagsList = []) {
+    if (tagsList.length === 0) return [...this.store]
+
+    return this.store.filter((e) => {
+      for (let _i = 0; _i < tagsList.length; _i++) {
+        if (e?.properties?.tags?.includes(tagsList[_i])) {
+          return true
+        }
+      }
+
+      return false
+    })
   },
 
   update: function (e) {

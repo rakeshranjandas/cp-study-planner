@@ -3,7 +3,7 @@ import React from "react"
 import Select from "react-select"
 import { DBCalendarServices } from "../../../services/db/DBCalendarServices"
 
-export default function TagSearchField(props) {
+export default function FilterByTagsBar(props) {
   const options = React.useMemo(() => {
     return DBCalendarServices.getAllTags().map((tag) => {
       return { value: tag, label: tag }

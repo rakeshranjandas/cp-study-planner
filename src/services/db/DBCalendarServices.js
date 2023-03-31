@@ -5,8 +5,8 @@ export const DBCalendarServices = {
     DBSingleton.getInstance().add(e)
   },
 
-  getAllEvents: () => {
-    return DBSingleton.getInstance().get()
+  getAllEvents: (tagsList) => {
+    return DBSingleton.getInstance().get(tagsList)
   },
 
   loadAllEvents: (allEvents = []) => {
