@@ -74,6 +74,12 @@ export default function AddEditEventForm(props) {
               <label>Tags:</label>
               <AddEditEventTagSelect
                 selectedOptionValuesList={curEvent?.properties?.tags}
+                onChange={(tagsList) =>
+                  setCurEvent({
+                    ...curEvent,
+                    properties: { ...curEvent.properties, tags: [...tagsList] },
+                  })
+                }
               />
             </div>
 

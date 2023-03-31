@@ -24,9 +24,9 @@ export default function AddEditEventTagSelect(props) {
       : []
   )
 
-  function changeSelectedOptions(e) {
-    console.log(e)
-    setSelectedOptions(e)
+  function changeSelectedOptions(tagsObjectList) {
+    setSelectedOptions(tagsObjectList)
+    props.onChange(tagsObjectList.map((tagObject) => tagObject.value))
   }
 
   return (
