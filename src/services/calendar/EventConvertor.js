@@ -42,16 +42,31 @@ export function appCalendarEventToGoogleCalendarEvent(appCalendarEvent) {
     },
 
     summary: appCalendarEvent.title,
+
+    description: Util.makeGoogleCalendarDescription(
+      appCalendarEvent.description,
+      appCalendarEvent.properties
+    ),
   }
 }
 
 const Util = {
-  regexp: /(.*)(#cp-study-calendar#(.*)#\/cp-study-calendar#)(.*)/gs,
+  LABEL_START: "#cp-study-calendar#",
+  LABEL_END: "#/cp-study-calendar#",
+
+  // regexp: /(.*)(#cp-study-calendar#(.*)#\/cp-study-calendar#)(.*)/gs,
+
+  regexp: function () {
+    return new RegExp(
+      `(.*)(${this.LABEL_START}(.*)${this.LABEL_END})(.*)`,
+      "gs"
+    )
+  },
 
   processDescriptionAndProperties: function (descRaw) {
     if (!descRaw) return false
 
-    const matches = [...descRaw.matchAll(this.regexp)]
+    const matches = [...descRaw.matchAll(this.regexp())]
 
     if (matches.length === 0 || matches[0].length < 5) return false
 
@@ -67,13 +82,21 @@ const Util = {
     }
   },
 
-  _isJsonString(str) {
+  _isJsonString: function (str) {
     try {
       JSON.parse(str)
     } catch (e) {
+      console.log("JSON Parse error ", str)
       return false
     }
     return true
+  },
+
+  makeGoogleCalendarDescription: function (appEventDesc, properties) {
+    return (
+      (appEventDesc ?? "") +
+      `${this.LABEL_START}${JSON.stringify(properties ?? {})}${this.LABEL_END}`
+    )
   },
 }
 

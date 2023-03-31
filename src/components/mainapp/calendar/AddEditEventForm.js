@@ -5,6 +5,7 @@ export default function AddEditEventForm(props) {
     start: (props.addEditEvent.startStr + "T00:00").substr(0, 16), // All-day startStr only contains date
     end: (props.addEditEvent.endStr + "T00:00").substr(0, 16),
     title: props.addEditEvent.title ?? "",
+    description: props.addEditEvent.description ?? "",
     ...(props.addEditEvent.id && { id: props.addEditEvent.id }),
   })
 
@@ -53,6 +54,17 @@ export default function AddEditEventForm(props) {
                   setCurEvent({ ...curEvent, title: e.target.value })
                 }
                 required
+              />
+            </p>
+
+            <p>
+              <label>Description:</label>
+              <textarea
+                rows="5"
+                value={curEvent.description}
+                onChange={(e) =>
+                  setCurEvent({ ...curEvent, description: e.target.value })
+                }
               />
             </p>
 
