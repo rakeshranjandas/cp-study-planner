@@ -36,8 +36,8 @@ export default function AppCalendar(props) {
 
   const handleDateSelect = (selectInfo) => {
     setAddEditEvent({
-      startStr: selectInfo.startStr,
-      endStr: selectInfo.endStr,
+      start: selectInfo.startStr,
+      end: selectInfo.endStr,
       allDay: selectInfo.allDay,
     })
 
