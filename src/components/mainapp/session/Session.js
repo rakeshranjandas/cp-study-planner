@@ -26,6 +26,7 @@ export default function Session() {
       targetTime: session.targetTime,
       elapsedTime: 0,
       finished: false,
+      paused: false,
     })
 
     const timerRef = new Timer(session.targetTime)
@@ -52,6 +53,20 @@ export default function Session() {
     setTimer(timerRef)
   }
 
+  function pauseSession() {
+    timer.pause()
+    setCurSession((prevSession) => {
+      return { ...prevSession, paused: true }
+    })
+  }
+
+  function resumeSession() {
+    timer.start()
+    setCurSession((prevSession) => {
+      return { ...prevSession, paused: false }
+    })
+  }
+
   return (
     <div className="session-div">
       <SessionTile showPopup={showPopup} curSession={curSession} />
@@ -62,6 +77,8 @@ export default function Session() {
           curSession={curSession}
           startSession={startSession}
           clearCurSession={clearCurSession}
+          pauseSession={pauseSession}
+          resumeSession={resumeSession}
         />
       )}
     </div>

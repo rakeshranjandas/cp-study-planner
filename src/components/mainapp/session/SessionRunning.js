@@ -9,19 +9,41 @@ export default function SessionRunning(props) {
         <span>{props.curSession.targetTime}</span>
       </p>
 
-      {props.curSession.finished && (
-        <p>
-          <button onClick={() => props.clearCurSession()}>Clear</button>
-          <button
-            onClick={() => {
-              props.closePopup()
-              props.clearCurSession()
-            }}
-          >
-            Exit
-          </button>
-        </p>
-      )}
+      <p>
+        {props.curSession.finished ? (
+          <>
+            <button onClick={() => props.clearCurSession()}>Clear</button>
+            <button
+              onClick={() => {
+                props.closePopup()
+                props.clearCurSession()
+              }}
+            >
+              Exit
+            </button>
+          </>
+        ) : (
+          <>
+            {!props.curSession.paused ? (
+              <button
+                onClick={() => {
+                  props.pauseSession()
+                }}
+              >
+                Pause
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  props.resumeSession()
+                }}
+              >
+                Resume
+              </button>
+            )}
+          </>
+        )}
+      </p>
     </div>
   )
 }

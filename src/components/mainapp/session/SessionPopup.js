@@ -18,6 +18,8 @@ export default function SessionPopup(props) {
         ) : (
           <SessionRunning
             curSession={props.curSession}
+            pauseSession={props.pauseSession}
+            resumeSession={props.resumeSession}
             clearCurSession={props.clearCurSession}
             closePopup={props.closePopup}
           />
