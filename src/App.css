@@ -143,3 +143,8 @@ a:not([href]):hover {
 .filter-div {
     padding: 1%;
 }
+
+.session-div {
+    background-color: rgb(172, 172, 238);
+    height: 100%;
+}

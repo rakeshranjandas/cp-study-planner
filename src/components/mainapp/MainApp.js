@@ -7,6 +7,7 @@ import { AllPanelsUpdateService } from "../../services/panelupdate/AllPanelsUpda
 import { TodayPanelUpdateService } from "../../services/panelupdate/TodayPanelUpdateService"
 import { BacklogPanelUpdateService } from "../../services/panelupdate/BacklogPanelUpdateService"
 import FilterByTags from "./filter/FilterByTags"
+import Session from "./session/Session"
 
 export default function MainApp() {
   const [appCalendarEvents, setAppCalendarEvents] = React.useState([])
@@ -34,7 +35,9 @@ export default function MainApp() {
         />
       </div>
 
-      <div className="grid-item item-session">Session 5</div>
+      <div className="grid-item item-session">
+        <Session />
+      </div>
       <div className="grid-item item-search">
         <FilterByTags setAppCalendarEvents={setAppCalendarEvents} />
       </div>
