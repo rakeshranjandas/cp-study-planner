@@ -4,12 +4,21 @@ import SessionTile from "./SessionTile"
 
 export default function Session() {
   const [curSession, setCurSession] = React.useState(null)
-  const [showSessionPopup, setShowSessionPopup] = React.useState(false)
+  const [isPopupOpen, setIsPopupOpen] = React.useState(false)
+
+  function closePopup() {
+    setIsPopupOpen(false)
+  }
+
+  function showPopup() {
+    setIsPopupOpen(true)
+  }
 
   return (
-    <div className="session-div" onClick={() => setShowSessionPopup(true)}>
-      <SessionTile />
-      {showSessionPopup && <SessionPopup />}
+    <div className="session-div">
+      <SessionTile showPopup={showPopup} />
+
+      {isPopupOpen && <SessionPopup closePopup={closePopup} />}
     </div>
   )
 }
