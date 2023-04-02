@@ -1,6 +1,13 @@
 import React from "react"
 
 export default function SessionRunning(props) {
+  function toHHMM(timeInSeconds) {
+    const minutes = Math.floor(timeInSeconds / 60)
+    const seconds = timeInSeconds - 60 * minutes
+
+    return ("0" + minutes).substr(-2) + ":" + ("0" + seconds).substr(-2)
+  }
+
   return (
     <div>
       <div className="popup-header session-running-header-div">
@@ -11,24 +18,25 @@ export default function SessionRunning(props) {
       </div>
       <div className="session-running-container-div">
         <div className="session-running-time-div">
-          <span>{props.curSession.elapsedTime}</span>/
-          <span>{props.curSession.targetTime}</span>
+          <span>
+            {toHHMM(props.curSession.targetTime - props.curSession.elapsedTime)}
+          </span>
         </div>
 
         <p>
           {props.curSession.finished ? (
-          <>
-            <button onClick={() => props.clearCurSession()}>Clear</button>
-            <button
-              onClick={() => {
-                props.closePopup()
-                props.clearCurSession()
-              }}
-            >
-              Exit
-            </button>
-          </>
-        ) : (
+            <>
+              <button onClick={() => props.clearCurSession()}>Clear</button>
+              <button
+                onClick={() => {
+                  props.closePopup()
+                  props.clearCurSession()
+                }}
+              >
+                Exit
+              </button>
+            </>
+          ) : (
             <>
               {!props.curSession.paused ? (
                 <button
@@ -45,11 +53,11 @@ export default function SessionRunning(props) {
                   onClick={() => {
                     props.resumeSession()
                   }}
-              >
-                Resume
-              </button>
-            )}
-          </>
+                >
+                  Resume
+                </button>
+              )}
+            </>
           )}
         </p>
       </div>
