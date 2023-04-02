@@ -1,13 +1,7 @@
 import React from "react"
+import { toHHMM } from "../../../util/timeConversions"
 
 export default function SessionRunning(props) {
-  function toHHMM(timeInSeconds) {
-    const minutes = Math.floor(timeInSeconds / 60)
-    const seconds = timeInSeconds - 60 * minutes
-
-    return ("0" + minutes).substr(-2) + ":" + ("0" + seconds).substr(-2)
-  }
-
   return (
     <div>
       <div className="popup-header session-running-header-div">

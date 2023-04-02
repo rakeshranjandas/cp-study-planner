@@ -8,6 +8,8 @@
     --fc-event-text-color: black;
     --app-event-background-color-pending: rgb(241, 172, 172);
     --app-event-background-color-done: rgb(196, 253, 196);
+    --session-color-add: #e274cb8a;
+    --session-color-ongoing: pink;
 }
 
 a:not([href]) {
@@ -186,12 +188,30 @@ a:not([href]):hover {
 }
 
 .session-div {
-    background-color: rgb(172, 172, 238);
     height: 100%;
 }
 
 .session-tile {
     height: 100%;
+    text-align: center;
+}
+
+.session-tile-div-add {
+    height: 100%;
+    font-size: 1.2em;
+    line-height: 3em;
+    background-color: var(--session-color-add);
+}
+
+.session-tile-div-ongoing {
+    height: 100%;
+    font-size: 1.2em;
+    background-color: var(--session-color-ongoing);
+}
+
+.session-tile-ongoing-status {
+    margin-left: 2%;;
+    font-size: 0.8em;;
 }
 
 .session-popup-main {
@@ -203,7 +223,7 @@ a:not([href]):hover {
 }
 
 .session-add-header-div {
-    background-color: rgb(142, 238, 52);
+    background-color: var(--session-color-add);
 }
 
 .session-running-header-div {
