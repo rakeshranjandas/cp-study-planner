@@ -5,6 +5,8 @@
     --fc-button-border-color: #2780e3;
     --fc-button-active-bg-color: #1f66b6;
     --fc-button-active-border-color: #1f66b6;
+    --app-event-background-color-pending: rgb(241, 172, 172);
+    --app-event-background-color-done: rgb(196, 253, 196);
 }
 
 a:not([href]) {
@@ -137,11 +139,11 @@ a:not([href]):hover {
 }
 
 .app-calendar-event-done {
-    background-color: rgb(196, 253, 196);
+    background-color: var(--app-event-background-color-done)
 }
 
 .app-calendar-event-pending {
-    background-color: rgb(241, 172, 172);
+    background-color: var(--app-event-background-color-pending)
 }
 
 .filter-div {
