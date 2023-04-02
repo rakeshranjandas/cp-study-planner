@@ -1,15 +1,9 @@
 import React from "react"
+import { timeHHMMToSeconds } from "../../../util/timeConversions"
 
 export default function SessionAdd(props) {
   const [targetTimeHHMM, setTargetTimeHHMM] = React.useState("01:00")
-
-  function convertTimeHHMMToSeconds(timeHHMM) {
-    const [minutes, seconds] = timeHHMM.split(":")
-
-    if (isNaN(minutes) || isNaN(seconds)) return false
-
-    return parseInt(minutes) * 60 + parseInt(seconds)
-  }
+  const [label, setLabel] = React.useState("")
 
   return (
     <div>
@@ -21,7 +15,17 @@ export default function SessionAdd(props) {
       </div>
       <form>
         <p>
-          <label>Set Time</label>
+          <label>Label</label>
+          <input
+            type="text"
+            value={label}
+            onChange={(e) => {
+              setLabel(e.target.value)
+            }}
+          />
+        </p>
+        <p>
+          <label>Countdown</label>
           <input
             type="time"
             value={targetTimeHHMM}
@@ -35,15 +39,17 @@ export default function SessionAdd(props) {
             onClick={(e) => {
               e.preventDefault()
 
-              const targetTimeInSeconds =
-                convertTimeHHMMToSeconds(targetTimeHHMM)
+              const targetTimeInSeconds = timeHHMMToSeconds(targetTimeHHMM)
 
               if (!targetTimeInSeconds) {
                 alert("Invalid time")
                 return
               }
 
-              props.startSession({ targetTime: targetTimeInSeconds })
+              props.startSession({
+                label: label === "" ? "Untitled" : label,
+                targetTime: targetTimeInSeconds,
+              })
             }}
           >
             Start

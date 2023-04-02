@@ -23,7 +23,7 @@ export default function Session() {
   function startSession(session) {
     console.log("START SESSION", session)
     setCurSession({
-      targetTime: session.targetTime,
+      ...session,
       elapsedTime: 0,
       finished: false,
       paused: false,

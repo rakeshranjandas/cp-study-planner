@@ -1,11 +1,21 @@
 import React from "react"
-import { toHHMM } from "../../../util/timeConversions"
+import { timeSecondsToHHMM } from "../../../util/timeConversions"
 
 export default function SessionRunning(props) {
   return (
     <div>
       <div className="popup-header session-running-header-div">
-        <h2>{!props.curSession.finished ? "Ongoing" : "Finished"} session</h2>
+        {/* <h2>{!props.curSession.finished ? "Ongoing" : "Finished"} session</h2> */}
+        <h2>
+          {props.curSession.label}
+          <span className="session-running-header-status">
+            {props.curSession.finished
+              ? "(FINISHED)"
+              : props.curSession.paused
+              ? "(PAUSED)"
+              : ""}
+          </span>
+        </h2>
         <span className="popup-close" onClick={() => props.closePopup(false)}>
           X
         </span>
@@ -13,7 +23,9 @@ export default function SessionRunning(props) {
       <div className="session-running-container-div">
         <div className="session-running-time-div">
           <span>
-            {toHHMM(props.curSession.targetTime - props.curSession.elapsedTime)}
+            {timeSecondsToHHMM(
+              props.curSession.targetTime - props.curSession.elapsedTime
+            )}
           </span>
         </div>
 

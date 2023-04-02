@@ -1,5 +1,5 @@
 import React from "react"
-import { toHHMM } from "../../../util/timeConversions"
+import { timeSecondsToHHMM } from "../../../util/timeConversions"
 
 export default function SessionTile(props) {
   return (
@@ -20,10 +20,12 @@ function AddNewSessionTile() {
 function OngoingSessionTile(props) {
   return (
     <div className="session-tile-div-ongoing">
-      Ongoing session
+      {props.curSession.label}
       <p>
         <span>
-          {toHHMM(props.curSession.targetTime - props.curSession.elapsedTime)}
+          {timeSecondsToHHMM(
+            props.curSession.targetTime - props.curSession.elapsedTime
+          )}
         </span>
         <span className="session-tile-ongoing-status">
           {props.curSession.finished
