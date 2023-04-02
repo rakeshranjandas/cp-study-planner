@@ -13,6 +13,10 @@ export class TodayPanelUpdateService extends AbstractSinglePanelUpdateService {
 
     console.log("Filtering for today panel", todayEvents)
 
+    todayEvents.sort(
+      (e1, e2) => new Date(e1.start).getTime() - new Date(e2.start).getTime()
+    )
+
     return todayEvents
   }
 }
