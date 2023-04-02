@@ -228,7 +228,11 @@ a:not([href]):hover {
 }
 
 .session-running-header-div {
-    background-color: pink;
+    background-color: var(--session-color-ongoing)
+}
+
+.session-running-header-status {
+    display: inline-block;
 }
 
 .session-running-time-div {
