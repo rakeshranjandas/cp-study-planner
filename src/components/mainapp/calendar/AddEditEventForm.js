@@ -29,15 +29,17 @@ export default function AddEditEventForm(props) {
     <div className="app-calendar-add-edit-event-bg">
       <div className="app-calendar-add-edit-event">
         <div>
-          <h1 className="app-calendar-add-edit-event-header">
-            {curEvent.id ? "Edit" : "Add"} Event
-          </h1>
+          <div className="app-calendar-add-edit-event-header-div">
+            <h1 className="app-calendar-add-edit-event-header">
+              {curEvent.id ? "Edit" : "Add"} Event
+            </h1>
           <span
             className="app-calendar-add-edit-event-close"
             onClick={() => props.setShowAddEditForm(false)}
-          >
-            X
-          </span>
+            >
+              X
+            </span>
+          </div>
 
           <form>
             <p>
@@ -76,7 +78,8 @@ export default function AddEditEventForm(props) {
             <p>
               <label>Description:</label>
               <textarea
-                rows="5"
+                rows="3"
+                cols="40"
                 value={curEvent.description}
                 onChange={(e) =>
                   setCurEvent({ ...curEvent, description: e.target.value })
@@ -113,7 +116,7 @@ export default function AddEditEventForm(props) {
 
               {curEvent.id && (
                 <button
-                  style={{ marginLeft: "15px" }}
+                  className="app-calendar-add-edit-event-delete-button"
                   onClick={(e) => {
                     e.preventDefault()
                     props.deleteEventHandler(curEvent.id)

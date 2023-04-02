@@ -37,6 +37,7 @@ export default function AddEditEventTagSelect(props) {
       options={options}
       value={selectedOptions}
       onChange={changeSelectedOptions}
+      menuPlacement="top"
     />
   )
 }

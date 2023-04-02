@@ -115,7 +115,7 @@ a:not([href]):hover {
     z-index: 2;
     top: 15%;
     left: 30%;
-    height: 70%;
+    min-height: 70%;
     width: 40%;
     background-color: white;
 }
@@ -129,6 +129,33 @@ a:not([href]):hover {
     border: 1px solid #1f66b6;
     padding: 5px;
     cursor: pointer;
+}
+
+.app-calendar-add-edit-event form {
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 9%;
+}
+
+.app-calendar-add-edit-event form label {
+    margin-top: 3%;
+    display: block;
+}
+
+.app-calendar-add-edit-event button {
+    margin-top: 3%;
+    margin-left: 3%;
+    float: right;
+}
+
+.app-calendar-add-edit-event-header-div {
+    text-align: center;
+    border: 1px solid black;
+    background-color: rgb(145, 240, 232);
+}
+
+.app-calendar-add-edit-event-delete-button {
+    background-color: rgb(221, 39, 39);
 }
 
 .app-calendar-event {
