@@ -185,3 +185,29 @@ a:not([href]):hover {
     padding: 5px;
     cursor: pointer;
 }
+
+.panel-div-heading {
+    text-align: center;
+    font-weight: lighter;
+}
+
+.panel-div-heading-backlog {
+    color: brown;
+}
+
+.panel-div-heading-today {
+    color: mediumorchid;
+}
+
+.panel-list-div {
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.panel-list-single-div {
+    text-align: center;
+    height: 2em;
+    padding: 1%;
+}
