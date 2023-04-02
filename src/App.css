@@ -5,6 +5,7 @@
     --fc-button-border-color: #2780e3;
     --fc-button-active-bg-color: #1f66b6;
     --fc-button-active-border-color: #1f66b6;
+    --fc-event-text-color: black;
     --app-event-background-color-pending: rgb(241, 172, 172);
     --app-event-background-color-done: rgb(196, 253, 196);
 }
