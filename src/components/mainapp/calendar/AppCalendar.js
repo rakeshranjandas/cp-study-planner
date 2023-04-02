@@ -131,12 +131,10 @@ export default function AppCalendar(props) {
 
         appCalendarEventCopy.classNames = ["app-calendar-event"]
 
-        if (new Date(appCalendarEventCopy.start) < new Date()) {
-          if (appCalendarEventCopy?.properties?.tags?.includes("done"))
-            appCalendarEventCopy.classNames.push("app-calendar-event-done")
-          else
-            appCalendarEventCopy.classNames.push("app-calendar-event-pending")
-        }
+        if (appCalendarEventCopy?.properties?.tags?.includes("done"))
+          appCalendarEventCopy.classNames.push("app-calendar-event-done")
+        else if (new Date(appCalendarEventCopy.start) < new Date())
+          appCalendarEventCopy.classNames.push("app-calendar-event-pending")
 
         return appCalendarEventCopy
       }),
