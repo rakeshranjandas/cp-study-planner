@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/cp-study-planner/static/css/main.62bd6a8a.css",
+    "main.js": "/cp-study-planner/static/js/main.4e90ff83.js",
+    "static/js/787.c4bfd27c.chunk.js": "/cp-study-planner/static/js/787.c4bfd27c.chunk.js",
+    "static/media/loading-calendar.gif": "/cp-study-planner/static/media/loading-calendar.213a5d77983f0bf0f074.gif",
+    "static/media/exit-icon.png": "/cp-study-planner/static/media/exit-icon.e56500700e8659f21f96.png",
+    "index.html": "/cp-study-planner/index.html",
+    "main.62bd6a8a.css.map": "/cp-study-planner/static/css/main.62bd6a8a.css.map",
+    "main.4e90ff83.js.map": "/cp-study-planner/static/js/main.4e90ff83.js.map",
+    "787.c4bfd27c.chunk.js.map": "/cp-study-planner/static/js/787.c4bfd27c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.62bd6a8a.css",
+    "static/js/main.4e90ff83.js"
+  ]
+}
