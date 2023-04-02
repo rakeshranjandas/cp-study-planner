@@ -26,16 +26,14 @@ export default function AddEditEventForm(props) {
   })
 
   return (
-    <div className="app-calendar-add-edit-event-bg">
-      <div className="app-calendar-add-edit-event">
+    <div className="popup-bg">
+      <div className="popup-content app-calendar-add-edit-event">
         <div>
-          <div className="app-calendar-add-edit-event-header-div">
-            <h1 className="app-calendar-add-edit-event-header">
-              {curEvent.id ? "Edit" : "Add"} Event
-            </h1>
-          <span
-            className="app-calendar-add-edit-event-close"
-            onClick={() => props.setShowAddEditForm(false)}
+          <div className="popup-header app-calendar-add-edit-event-header-div">
+            <h2>{curEvent.id ? "Edit" : "Add"} Event</h2>
+            <span
+              className="popup-close"
+              onClick={() => props.setShowAddEditForm(false)}
             >
               X
             </span>
@@ -119,7 +117,9 @@ export default function AddEditEventForm(props) {
                   className="app-calendar-add-edit-event-delete-button"
                   onClick={(e) => {
                     e.preventDefault()
-                    props.deleteEventHandler(curEvent.id)
+
+                    if (window.confirm("Delete this event?"))
+                      props.deleteEventHandler(curEvent.id)
                   }}
                 >
                   Delete Event

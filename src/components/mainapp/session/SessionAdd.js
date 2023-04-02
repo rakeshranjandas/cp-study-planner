@@ -4,10 +4,15 @@ export default function SessionAdd(props) {
   const [targetTime, setTargetTime] = React.useState(10)
   return (
     <div>
-      <h2>Add New Session</h2>
+      <div className="popup-header session-add-header-div">
+        <h2>Add New Session</h2>
+        <span className="popup-close" onClick={() => props.closePopup(false)}>
+          X
+        </span>
+      </div>
       <form>
-        <p>Set Time in seconds</p>
         <p>
+          <label>Set Time in seconds</label>
           <input
             type="number"
             min="1"

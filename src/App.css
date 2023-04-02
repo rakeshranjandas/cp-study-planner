@@ -100,7 +100,7 @@ a:not([href]):hover {
     margin-left: 2%;
 }
 
-.app-calendar-add-edit-event-bg {
+.popup-bg {
     position: absolute;
     z-index: 5;
     background-color: rgba(0,0,0,0.5);
@@ -110,52 +110,59 @@ a:not([href]):hover {
     width: 100%;
 }
 
-.app-calendar-add-edit-event {
+.popup-content {
     position: absolute;
-    z-index: 2;
-    top: 15%;
-    left: 30%;
-    min-height: 70%;
-    width: 40%;
-    background-color: white;
+    z-index: 8;
 }
 
-.app-calendar-add-edit-event-header {
+.popup-header {
+    text-align: center;
+    border: 1px solid black;
+}
+
+.popup-header h2 {
     display: inline-block;
 }
 
-.app-calendar-add-edit-event-close {
+.popup-close {
     float: right;
     border: 1px solid #1f66b6;
     padding: 5px;
     cursor: pointer;
 }
 
-.app-calendar-add-edit-event form {
+.popup-content form {
     padding-left: 5%;
     padding-right: 5%;
     padding-bottom: 9%;
 }
 
-.app-calendar-add-edit-event form label {
+.popup-content form label {
     margin-top: 3%;
     display: block;
 }
 
-.app-calendar-add-edit-event button {
+.popup-content form button {
     margin-top: 3%;
     margin-left: 3%;
     float: right;
 }
 
+.app-calendar-add-edit-event {
+    top: 15%;
+    left: 30%;
+    min-height: 70%;
+    width: 30%;
+    background-color: white;
+}
+
 .app-calendar-add-edit-event-header-div {
-    text-align: center;
-    border: 1px solid black;
     background-color: rgb(145, 240, 232);
 }
 
 .app-calendar-add-edit-event-delete-button {
     background-color: rgb(221, 39, 39);
+    color: white;
 }
 
 .app-calendar-event {
@@ -187,19 +194,7 @@ a:not([href]):hover {
     height: 100%;
 }
 
-.session-popup-bg {
-    position: absolute;
-    z-index: 5;
-    background-color: rgba(0,0,0,0.5);
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-}
-
 .session-popup-main {
-    position: absolute;
-    z-index: 2;
     top: 15%;
     left: 30%;
     height: 70%;
@@ -207,11 +202,34 @@ a:not([href]):hover {
     background-color: white;
 }
 
-.session-popup-close {
-    float: right;
-    border: 1px solid #1f66b6;
-    padding: 5px;
-    cursor: pointer;
+.session-add-header-div {
+    background-color: rgb(142, 238, 52);
+}
+
+.session-running-header-div {
+    background-color: pink;
+}
+
+.session-running-time-div {
+    text-align: center;
+    font-size: 5em;
+    color: red;
+}
+
+.session-running-container-div{
+    text-align: center;
+}
+
+.session-running-container-div button {
+    margin: 5%;
+}
+
+.session-running-button-pause {
+    color: brown;
+}
+
+.session-running-button-resume {
+    color: blue;
 }
 
 .panel-div-heading {

@@ -3,14 +3,20 @@ import React from "react"
 export default function SessionRunning(props) {
   return (
     <div>
-      <h2>{!props.curSession.finished ? "Ongoing" : "Finished"} session</h2>
-      <p>
-        <span>{props.curSession.elapsedTime}</span>/
-        <span>{props.curSession.targetTime}</span>
-      </p>
+      <div className="popup-header session-running-header-div">
+        <h2>{!props.curSession.finished ? "Ongoing" : "Finished"} session</h2>
+        <span className="popup-close" onClick={() => props.closePopup(false)}>
+          X
+        </span>
+      </div>
+      <div className="session-running-container-div">
+        <div className="session-running-time-div">
+          <span>{props.curSession.elapsedTime}</span>/
+          <span>{props.curSession.targetTime}</span>
+        </div>
 
-      <p>
-        {props.curSession.finished ? (
+        <p>
+          {props.curSession.finished ? (
           <>
             <button onClick={() => props.clearCurSession()}>Clear</button>
             <button
@@ -23,27 +29,30 @@ export default function SessionRunning(props) {
             </button>
           </>
         ) : (
-          <>
-            {!props.curSession.paused ? (
-              <button
-                onClick={() => {
-                  props.pauseSession()
-                }}
-              >
-                Pause
-              </button>
-            ) : (
-              <button
-                onClick={() => {
-                  props.resumeSession()
-                }}
+            <>
+              {!props.curSession.paused ? (
+                <button
+                  className="session-running-button-pause"
+                  onClick={() => {
+                    props.pauseSession()
+                  }}
+                >
+                  Pause
+                </button>
+              ) : (
+                <button
+                  className="session-running-button-resume"
+                  onClick={() => {
+                    props.resumeSession()
+                  }}
               >
                 Resume
               </button>
             )}
           </>
-        )}
-      </p>
+          )}
+        </p>
+      </div>
     </div>
   )
 }
