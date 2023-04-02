@@ -21,6 +21,14 @@ export default function MainApp() {
     ])
   }, [])
 
+  React.useEffect(() => {
+    const panelUpdaterInterval = setInterval(() => {
+      panelsUpdater.run()
+    }, 1000 * 60 * 5)
+
+    return () => clearInterval(panelUpdaterInterval)
+  }, [])
+
   return (
     <div className="grid-container">
       <div className="grid-item item-logout">
