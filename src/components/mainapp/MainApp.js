@@ -44,7 +44,7 @@ export default function MainApp() {
       </div>
 
       <div className="grid-item item-session">
-        <Session />
+        <Session appCalendarEvents={appCalendarEvents} />
       </div>
       <div className="grid-item item-search">
         <FilterByTags setAppCalendarEvents={setAppCalendarEvents} />

@@ -3,7 +3,7 @@ import SessionPopup from "./SessionPopup"
 import SessionTile from "./SessionTile"
 import Timer from "../../../services/timer/Timer"
 
-export default function Session() {
+export default function Session(props) {
   const [curSession, setCurSession] = React.useState(null)
   const [isPopupOpen, setIsPopupOpen] = React.useState(false)
   const [timer, setTimer] = React.useState(null)
@@ -73,6 +73,7 @@ export default function Session() {
 
       {isPopupOpen && (
         <SessionPopup
+          appCalendarEvents={props.appCalendarEvents}
           closePopup={closePopup}
           curSession={curSession}
           startSession={startSession}

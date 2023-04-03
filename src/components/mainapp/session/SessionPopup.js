@@ -8,6 +8,7 @@ export default function SessionPopup(props) {
       <div className="popup-content session-popup-main">
         {!props.curSession ? (
           <SessionAdd
+            appCalendarEvents={props.appCalendarEvents}
             startSession={props.startSession}
             closePopup={props.closePopup}
           />

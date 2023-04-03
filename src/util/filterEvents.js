@@ -22,7 +22,7 @@ export function filterBacklogEvents(allEvents) {
   return sortByStartTime(backlogEvents)
 }
 
-function sortByStartTime(allEvents) {
+export function sortByStartTime(allEvents) {
   return allEvents.sort(
     (e1, e2) => new Date(e1.start).getTime() - new Date(e2.start).getTime()
   )
