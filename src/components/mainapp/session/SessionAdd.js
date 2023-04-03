@@ -11,12 +11,6 @@ export default function SessionAdd(props) {
   const [label, setLabel] = React.useState("")
   const [selectedEventIdList, setSelectedEventIdList] = React.useState([])
 
-  function getSelectedEvents() {
-    return props.appCalendarEvents.filter((e) =>
-      selectedEventIdList.includes(e.id)
-    )
-  }
-
   return (
     <div>
       <div className="popup-header session-add-header-div">
@@ -71,7 +65,9 @@ export default function SessionAdd(props) {
               props.startSession({
                 label: label === "" ? "Untitled" : label,
                 targetTime: targetTimeInSeconds,
-                events: getSelectedEvents(),
+                events: selectedEventIdList.map((evId) => {
+                  return { id: evId, done: false }
+                }),
               })
             }}
           >

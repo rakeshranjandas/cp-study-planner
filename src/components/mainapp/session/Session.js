@@ -67,6 +67,19 @@ export default function Session(props) {
     })
   }
 
+  function toggleSessionEventDone(evId) {
+    setCurSession((prevCurSession) => {
+      const deepCopiedCurSession = JSON.parse(JSON.stringify(prevCurSession))
+      deepCopiedCurSession.events.forEach((ev) => {
+        if (ev.id === evId) {
+          ev.done = !ev.done
+        }
+      })
+
+      return deepCopiedCurSession
+    })
+  }
+
   return (
     <div className="session-div">
       <SessionTile showPopup={showPopup} curSession={curSession} />
@@ -80,6 +93,7 @@ export default function Session(props) {
           clearCurSession={clearCurSession}
           pauseSession={pauseSession}
           resumeSession={resumeSession}
+          toggleSessionEventDone={toggleSessionEventDone}
         />
       )}
     </div>

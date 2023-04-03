@@ -17,8 +17,10 @@ export default function SessionPopup(props) {
             curSession={props.curSession}
             pauseSession={props.pauseSession}
             resumeSession={props.resumeSession}
+            toggleSessionEventDone={props.toggleSessionEventDone}
             clearCurSession={props.clearCurSession}
             closePopup={props.closePopup}
+            appCalendarEvents={props.appCalendarEvents}
           />
         )}
       </div>
