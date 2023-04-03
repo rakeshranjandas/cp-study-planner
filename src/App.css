@@ -6,7 +6,7 @@
     --fc-button-active-bg-color: #1f66b6;
     --fc-button-active-border-color: #1f66b6;
     --fc-event-text-color: black;
-    --app-event-background-color-pending: rgb(241, 172, 172);
+    --app-event-background-color-pending: #f85c5c;
     --app-event-background-color-done: rgb(196, 253, 196);
     --session-color-add: #e274cb8a;
     --session-color-ongoing: pink;
@@ -195,6 +195,7 @@ a:not([href]):hover {
 .session-tile {
     height: 100%;
     text-align: center;
+    cursor: pointer;
 }
 
 .session-tile-div-add {
@@ -218,7 +219,7 @@ a:not([href]):hover {
 .session-popup-main {
     top: 15%;
     left: 30%;
-    height: 70%;
+    min-height: 70%;
     width: 40%;
     background-color: white;
 }
@@ -257,6 +258,38 @@ a:not([href]):hover {
     color: blue;
 }
 
+.session-add-tasks-div {
+    height: 200px;
+    width: 100%;
+    border: 1px solid black;
+    display: flex;
+}
+
+.session-add-tasks-div > div {
+    flex-basis: 50%;
+    padding: 2%;
+}
+
+.session-add-tasks-choice-div {
+    background-color: red;
+}
+
+.session-add-tasks-added-div {
+    background-color: yellow;
+}
+
+.session-add-tasks-choice-list-div {
+    overflow: hidden;
+    max-height: 80%;
+    overflow-y: scroll;
+    margin-top: 10%;
+}
+
+.session-add-tasks-added-div {
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
 .panel-div-heading {
     text-align: center;
     font-weight: lighter;
@@ -280,5 +313,5 @@ a:not([href]):hover {
 .panel-list-single-div {
     text-align: center;
     height: 2em;
-    padding: 1%;
+    padding: 2%;
 }
