@@ -217,7 +217,7 @@ a:not([href]):hover {
 }
 
 .session-popup-main {
-    top: 15%;
+    top: 5%;
     left: 30%;
     min-height: 70%;
     width: 40%;
@@ -244,6 +244,19 @@ a:not([href]):hover {
 
 .session-running-container-div{
     text-align: center;
+}
+
+.session-running-phase-div {
+    margin-top: 2%;
+    justify-content: center;
+    display: flex;
+}
+
+.session-running-phase-div p {
+    font-size: xx-large;
+    width: 100px;
+    background-color: red;
+    color: white;
 }
 
 .session-running-container-div button {

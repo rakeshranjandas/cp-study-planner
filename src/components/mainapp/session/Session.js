@@ -27,6 +27,7 @@ export default function Session(props) {
       elapsedTime: 0,
       finished: false,
       paused: false,
+      phase: session.tData[0],
     })
 
     const timerRef = new Timer(session.targetTime)
@@ -35,6 +36,12 @@ export default function Session(props) {
 
       setCurSession((prev) => {
         return { ...prev, elapsedTime: ctx.elapsed }
+      })
+
+      setCurSession((prev) => {
+        if (prev.tData[ctx.elapsed])
+          return { ...prev, phase: prev.tData[ctx.elapsed] }
+        return { ...prev }
       })
     })
 

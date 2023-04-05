@@ -21,6 +21,9 @@ export default function SessionRunning(props) {
         </span>
       </div>
       <div className="session-running-container-div">
+        <div className="session-running-phase-div">
+          <p>{props.curSession.phase}</p>
+        </div>
         <div className="session-running-time-div">
           <span>
             {timeSecondsToHHMM(

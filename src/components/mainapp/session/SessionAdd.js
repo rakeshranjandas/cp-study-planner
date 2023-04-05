@@ -4,12 +4,35 @@ import {
   filterTodayEvents,
   sortByStartTime,
 } from "../../../util/filterEvents"
-import { timeHHMMToSeconds } from "../../../util/timeConversions"
+// import { timeHHMMToSeconds } from "../../../util/timeConversions"
 
 export default function SessionAdd(props) {
   const [targetTimeHHMM, setTargetTimeHHMM] = React.useState("01:00")
   const [label, setLabel] = React.useState("")
   const [selectedEventIdList, setSelectedEventIdList] = React.useState([])
+  const [countdownScheme, setCountdownScheme] = React.useState("")
+
+  function getCountdownInfo(cs) {
+    const csArr = cs.split("\n")
+    let ti = 0
+    let tData = {}
+
+    csArr.forEach((t) => {
+      const nt = t.split(" ")
+
+      if (isNaN(nt[0])) throw new Error("Invalid Countdown Scheme")
+      const tlabel = nt[1] ?? ""
+
+      tData[ti] = tlabel
+
+      ti += parseInt(nt[0])
+    })
+
+    return {
+      targetTimeInSeconds: ti,
+      tData: tData,
+    }
+  }
 
   return (
     <div>
@@ -30,7 +53,7 @@ export default function SessionAdd(props) {
             }}
           />
         </p>
-        <p>
+        {/* <p>
           <label>Countdown</label>
           <input
             type="time"
@@ -38,6 +61,15 @@ export default function SessionAdd(props) {
             onChange={(e) => {
               setTargetTimeHHMM(e.target.value)
             }}
+          />
+        </p> */}
+
+        <p>
+          <label>Countdown scheme</label>
+          <textarea
+            rows="5"
+            value={countdownScheme}
+            onChange={(e) => setCountdownScheme(e.target.value)}
           />
         </p>
 
@@ -55,20 +87,28 @@ export default function SessionAdd(props) {
             onClick={(e) => {
               e.preventDefault()
 
-              const targetTimeInSeconds = timeHHMMToSeconds(targetTimeHHMM)
+              // const targetTimeInSeconds = timeHHMMToSeconds(targetTimeHHMM)
 
-              if (!targetTimeInSeconds) {
-                alert("Invalid time")
-                return
+              // if (!targetTimeInSeconds) {
+              //   alert("Invalid time")
+              //   return
+              // }
+
+              try {
+                const coundownData = getCountdownInfo(countdownScheme)
+                console.log(coundownData)
+
+                props.startSession({
+                  label: label === "" ? "Untitled" : label,
+                  targetTime: coundownData.targetTimeInSeconds,
+                  events: selectedEventIdList.map((evId) => {
+                    return { id: evId, done: false }
+                  }),
+                  tData: coundownData.tData,
+                })
+              } catch (err) {
+                alert("Bad Countdown Scheme")
               }
-
-              props.startSession({
-                label: label === "" ? "Untitled" : label,
-                targetTime: targetTimeInSeconds,
-                events: selectedEventIdList.map((evId) => {
-                  return { id: evId, done: false }
-                }),
-              })
             }}
           >
             Start
