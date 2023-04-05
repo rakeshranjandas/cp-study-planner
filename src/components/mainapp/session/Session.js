@@ -76,7 +76,8 @@ export default function Session(props) {
 
   function toggleSessionEventDone(evId) {
     setCurSession((prevCurSession) => {
-      const deepCopiedCurSession = JSON.parse(JSON.stringify(prevCurSession))
+      // const deepCopiedCurSession = JSON.parse(JSON.stringify(prevCurSession))
+      const deepCopiedCurSession = structuredClone(prevCurSession)
       deepCopiedCurSession.events.forEach((ev) => {
         if (ev.id === evId) {
           ev.done = !ev.done

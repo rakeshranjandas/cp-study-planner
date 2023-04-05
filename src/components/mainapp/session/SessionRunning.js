@@ -76,7 +76,7 @@ export default function SessionRunning(props) {
               onClick={() => props.toggleSessionEventDone(ev.id)}
               style={{
                 backgroundColor: ev.done ? "green" : "red",
-                color: ev.done ? "black" : "white",
+                color: "white",
               }}
             >
               {props.appCalendarEvents.find((ae) => ae.id === ev.id).title}
