@@ -19,13 +19,23 @@ export default function SessionAdd(props) {
 
     csArr.forEach((t) => {
       const nt = t.split(" ")
+      const mmssArr = nt[0].split(":")
+      const mm = mmssArr[0]
+      const ss = mmssArr[1]
 
-      if (isNaN(nt[0])) throw new Error("Invalid Countdown Scheme")
+      if (isNaN(mm) || (ss && isNaN(ss)))
+        throw new Error("Invalid Countdown Scheme")
       const tlabel = nt[1] ?? ""
+      const color = nt[2] ?? "red"
 
-      tData[ti] = tlabel
+      tData[ti] = {
+        label: tlabel,
+        color: color,
+      }
 
-      ti += parseInt(nt[0])
+      const timeInSeconds = parseInt(mm) * 60 + parseInt(ss ?? 0)
+
+      ti += timeInSeconds
     })
 
     return {
@@ -65,7 +75,7 @@ export default function SessionAdd(props) {
         </p> */}
 
         <p>
-          <label>Countdown scheme</label>
+          <label>Countdown scheme (currently in seconds)</label>
           <textarea
             rows="5"
             value={countdownScheme}

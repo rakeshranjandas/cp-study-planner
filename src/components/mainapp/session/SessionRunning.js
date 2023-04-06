@@ -22,7 +22,9 @@ export default function SessionRunning(props) {
       </div>
       <div className="session-running-container-div">
         <div className="session-running-phase-div">
-          <p>{props.curSession.phase}</p>
+          <p style={{ backgroundColor: props.curSession.phase.color }}>
+            {props.curSession.phase.label}
+          </p>
         </div>
         <div className="session-running-time-div">
           <span>
