@@ -88,7 +88,9 @@ export default function MainApp() {
       <div className="grid-item item-session">
         <Session
           appCalendarEvents={appCalendarEvents}
+          appCalendarEventActions={appCalendarEventActions}
           setAppCalendarEvents={setAppCalendarEvents}
+          calendarService={calendarService}
         />
       </div>
       <div className="grid-item item-search">

@@ -50,6 +50,18 @@ export function appCalendarEventToGoogleCalendarEvent(appCalendarEvent) {
   }
 }
 
+export function sessionToAppCalendarEvent(session) {
+  return {
+    title: session.label,
+    start: session.start,
+    end: session.end,
+    properties: {
+      tags: ["is-session"],
+      sessionData: { ...session },
+    },
+  }
+}
+
 const Util = {
   LABEL_START: "#cp-study-calendar#",
   LABEL_END: "#/cp-study-calendar#",
