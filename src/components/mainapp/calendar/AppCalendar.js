@@ -13,27 +13,6 @@ export default function AppCalendar(props) {
   const fullCalendarRef = React.createRef()
   const loader = React.useContext(LoaderContext)
 
-  const addAppCalendarEvent = (addedEvent) => {
-    props.setAppCalendarEvents([...props.appCalendarEvents, addedEvent])
-  }
-
-  const deleteAppCalendarEvent = (id) => {
-    props.setAppCalendarEvents(
-      props.appCalendarEvents.filter((appEvent) => appEvent.id !== id)
-    )
-  }
-
-  const editAppCalendarEvent = (updatedEvent, eventId) => {
-    props.setAppCalendarEvents((prevAppEventsList) => {
-      const foundIndex = props.appCalendarEvents.findIndex(
-        (appEvent) => appEvent.id === eventId
-      )
-      let copyAppEventsList = [...prevAppEventsList]
-      copyAppEventsList[foundIndex] = updatedEvent
-      return copyAppEventsList
-    })
-  }
-
   const handleDateSelect = (selectInfo) => {
     setAddEditEvent({
       start: selectInfo.startStr,
@@ -49,7 +28,7 @@ export default function AppCalendar(props) {
         .addGoogleCalendarEvent(addInput)
         .then((addedEvent) => {
           console.log(addedEvent)
-          addAppCalendarEvent(addedEvent)
+          props.appCalendarEventActions.add(addedEvent)
           setShowAddEditForm(false)
           loader.hide()
         })
@@ -86,7 +65,7 @@ export default function AppCalendar(props) {
         .updateGoogleCalendarEvent(editInput)
         .then((updatedEvent) => {
           console.log(updatedEvent)
-          editAppCalendarEvent(updatedEvent, editInput.id)
+          props.appCalendarEventActions.edit(updatedEvent, editInput.id)
           setShowAddEditForm(false)
           loader.hide()
         })
@@ -104,7 +83,7 @@ export default function AppCalendar(props) {
     props.calendarService
       .deleteGoogleCalendarEvent(id)
       .then(() => {
-        deleteAppCalendarEvent(id)
+        props.appCalendarEventActions.delete(id)
         setShowAddEditForm(false)
         loader.hide()
       })

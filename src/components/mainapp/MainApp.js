@@ -14,6 +14,33 @@ export default function MainApp() {
   const [todayEvents, setTodayEvents] = React.useState([])
   const [backlogEvents, setBacklogEvents] = React.useState([])
 
+  const appCalendarEventActions = React.useMemo(() => {
+    return {
+      add: (addedEvent) => {
+        setAppCalendarEvents((prevAppEventsList) => {
+          return [...prevAppEventsList, addedEvent]
+        })
+      },
+
+      delete: (eventId) => {
+        setAppCalendarEvents((prevAppEventsList) => {
+          return prevAppEventsList.filter((appEvent) => appEvent.id !== eventId)
+        })
+      },
+
+      edit: (updatedEvent, eventId) => {
+        setAppCalendarEvents((prevAppEventsList) => {
+          const foundIndex = prevAppEventsList.findIndex(
+            (appEvent) => appEvent.id === eventId
+          )
+          let copyAppEventsList = structuredClone(prevAppEventsList)
+          copyAppEventsList[foundIndex] = updatedEvent
+          return copyAppEventsList
+        })
+      },
+    }
+  }, [setAppCalendarEvents])
+
   const panelsUpdater = React.useMemo(() => {
     return new AllPanelsUpdateService([
       new TodayPanelUpdateService(setTodayEvents),
@@ -38,13 +65,17 @@ export default function MainApp() {
       <div className="grid-item item-calendar">
         <Calendar
           appCalendarEvents={appCalendarEvents}
+          appCalendarEventActions={appCalendarEventActions}
           setAppCalendarEvents={setAppCalendarEvents}
           panelsUpdater={panelsUpdater}
         />
       </div>
 
       <div className="grid-item item-session">
-        <Session appCalendarEvents={appCalendarEvents} />
+        <Session
+          appCalendarEvents={appCalendarEvents}
+          setAppCalendarEvents={setAppCalendarEvents}
+        />
       </div>
       <div className="grid-item item-search">
         <FilterByTags setAppCalendarEvents={setAppCalendarEvents} />
