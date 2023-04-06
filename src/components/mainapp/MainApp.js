@@ -8,6 +8,9 @@ import { TodayPanelUpdateService } from "../../services/panelupdate/TodayPanelUp
 import { BacklogPanelUpdateService } from "../../services/panelupdate/BacklogPanelUpdateService"
 import FilterByTags from "./filter/FilterByTags"
 import Session from "./session/Session"
+import { UserContext } from "../../context/UserContext"
+import { CalendarService } from "../../services/calendar/CalendarService"
+import { GoogleCalendarAPI } from "../../services/google/GoogleCalendarAPI"
 
 export default function MainApp() {
   const [appCalendarEvents, setAppCalendarEvents] = React.useState([])
@@ -48,6 +51,19 @@ export default function MainApp() {
     ])
   }, [])
 
+  const user = React.useContext(UserContext)
+  const calendarService = React.useMemo(
+    () =>
+      new CalendarService({
+        panelsUpdater: panelsUpdater,
+        googleCalendarAPIInstance: new GoogleCalendarAPI(
+          user.user.access_token
+        ),
+        setAppCalendarEvents: setAppCalendarEvents,
+      }),
+    [panelsUpdater, setAppCalendarEvents, user.user.access_token]
+  )
+
   React.useEffect(() => {
     const panelUpdaterInterval = setInterval(() => {
       panelsUpdater.run()
@@ -67,7 +83,7 @@ export default function MainApp() {
           appCalendarEvents={appCalendarEvents}
           appCalendarEventActions={appCalendarEventActions}
           setAppCalendarEvents={setAppCalendarEvents}
-          panelsUpdater={panelsUpdater}
+          calendarService={calendarService}
         />
       </div>
 
