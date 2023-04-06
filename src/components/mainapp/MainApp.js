@@ -19,26 +19,24 @@ export default function MainApp() {
 
   const appCalendarEventActions = React.useMemo(() => {
     return {
-      add: (addedEvent) => {
+      add: (newEvent) => {
         setAppCalendarEvents((prevAppEventsList) => {
-          return [...prevAppEventsList, addedEvent]
+          const copyAppEventsList = structuredClone(prevAppEventsList)
+
+          const foundIndex = prevAppEventsList.findIndex(
+            (appEvent) => appEvent.id === newEvent.id
+          )
+
+          if (foundIndex === -1) copyAppEventsList.push(newEvent)
+          else copyAppEventsList[foundIndex] = newEvent
+
+          return copyAppEventsList
         })
       },
 
       delete: (eventId) => {
         setAppCalendarEvents((prevAppEventsList) => {
           return prevAppEventsList.filter((appEvent) => appEvent.id !== eventId)
-        })
-      },
-
-      edit: (updatedEvent, eventId) => {
-        setAppCalendarEvents((prevAppEventsList) => {
-          const foundIndex = prevAppEventsList.findIndex(
-            (appEvent) => appEvent.id === eventId
-          )
-          let copyAppEventsList = structuredClone(prevAppEventsList)
-          copyAppEventsList[foundIndex] = updatedEvent
-          return copyAppEventsList
         })
       },
     }

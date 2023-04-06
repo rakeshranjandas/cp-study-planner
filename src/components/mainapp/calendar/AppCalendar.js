@@ -65,7 +65,7 @@ export default function AppCalendar(props) {
         .updateGoogleCalendarEvent(editInput)
         .then((updatedEvent) => {
           console.log(updatedEvent)
-          props.appCalendarEventActions.edit(updatedEvent, editInput.id)
+          props.appCalendarEventActions.add(updatedEvent)
           setShowAddEditForm(false)
           loader.hide()
         })
