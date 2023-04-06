@@ -50,6 +50,7 @@ export default function Session(props) {
       finished: false,
       paused: false,
       phase: session.tData[0],
+      start: new Date().toISOString(),
     })
 
     const timerRef = new Timer(session.targetTime)
@@ -71,7 +72,12 @@ export default function Session(props) {
       // console.log(ctx, " FINISHED")
 
       setCurSession((prev) => {
-        return { ...prev, elapsedTime: ctx.elapsed, finished: true }
+        return {
+          ...prev,
+          elapsedTime: ctx.elapsed,
+          finished: true,
+          end: new Date().toISOString(),
+        }
       })
 
       setTimer(null)
