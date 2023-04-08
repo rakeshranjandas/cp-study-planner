@@ -37,9 +37,10 @@ export function sortByStartTime(allEvents) {
 }
 
 export function isEventDone(event) {
-  return event?.properties?.tags.includes(SYSTEM_TAG.IS_DONE)
+  return event?.properties?.tags?.includes(SYSTEM_TAG.IS_DONE)
 }
 
 export function isEventASession(event) {
-  return event?.properties?.tags.includes(SYSTEM_TAG.IS_SESSION)
+  console.log(event, "eee")
+  return event?.properties?.tags?.includes(SYSTEM_TAG.IS_SESSION)
 }
