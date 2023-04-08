@@ -6,23 +6,23 @@ export const DBCalendarServices = {
     DBSingleton.getInstance().add(e)
   },
 
-  getAllEvents: (tagsList) => {
+  getAllEvents: async (tagsList) => {
     return DBSingleton.getInstance().get(tagsList)
   },
 
-  loadAllEvents: (allEvents = []) => {
-    DBSingleton.getInstance().load(allEvents)
+  loadAllEvents: async (allEvents = []) => {
+    await DBSingleton.getInstance().load(allEvents)
   },
 
-  addEvent: (newEvent) => {
-    DBSingleton.getInstance().add(newEvent)
+  addEvent: async (newEvent) => {
+    await DBSingleton.getInstance().add(newEvent)
   },
 
-  updateEvent: (updatedEvent) => {
-    DBSingleton.getInstance().update(updatedEvent)
+  updateEvent: async (updatedEvent) => {
+    await DBSingleton.getInstance().update(updatedEvent)
   },
 
-  deleteEvent: (id) => {
+  deleteEvent: async (id) => {
     DBSingleton.getInstance().delete(id)
   },
 

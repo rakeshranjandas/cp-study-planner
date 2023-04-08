@@ -1,3 +1,5 @@
+import DBDexie from "./IDB/DBDexie"
+
 export class DBSingleton {
   static dbInstance = null
 
@@ -9,7 +11,8 @@ export class DBSingleton {
 }
 
 function initialiseDBInstance() {
-  return DUMMY_DB_INSTANCE
+  // return DUMMY_DB_INSTANCE
+  return new DBDexie()
 }
 
 const DUMMY_DB_INSTANCE = {

@@ -42,8 +42,8 @@ export class CalendarService {
 
     console.log(appCalendarEvents, "appCalendarEvents")
 
-    DBCalendarServices.loadAllEvents(appCalendarEvents)
-    this.panelsUpdater.run()
+    await DBCalendarServices.loadAllEvents(appCalendarEvents)
+    await this.panelsUpdater.run()
 
     this.setAppCalendarEvents(appCalendarEvents)
   }
@@ -62,8 +62,8 @@ export class CalendarService {
       googleCalendarEventAdded
     )
 
-    DBCalendarServices.addEvent(appCalendarEventAdded)
-    this.panelsUpdater.run()
+    await DBCalendarServices.addEvent(appCalendarEventAdded)
+    await this.panelsUpdater.run()
 
     return appCalendarEventAdded
   }
@@ -84,8 +84,8 @@ export class CalendarService {
       googleCalendarEventUpdated
     )
 
-    DBCalendarServices.updateEvent(appCalendarEventUpdated)
-    this.panelsUpdater.run()
+    await DBCalendarServices.updateEvent(appCalendarEventUpdated)
+    await this.panelsUpdater.run()
 
     return appCalendarEventUpdated
   }
@@ -93,7 +93,7 @@ export class CalendarService {
   async deleteGoogleCalendarEvent(googleCalendarEventId) {
     await this.googleCalendarAPIInstance.deleteEvent(googleCalendarEventId)
 
-    DBCalendarServices.deleteEvent(googleCalendarEventId)
-    this.panelsUpdater.run()
+    await DBCalendarServices.deleteEvent(googleCalendarEventId)
+    await this.panelsUpdater.run()
   }
 }

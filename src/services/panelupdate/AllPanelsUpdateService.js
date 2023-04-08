@@ -7,8 +7,8 @@ export class AllPanelsUpdateService {
     this.singlePanelUpdateServices = listOfSinglePanelUpdateService
   }
 
-  run() {
-    const allEvents = DBCalendarServices.getAllEvents()
+  async run() {
+    const allEvents = await DBCalendarServices.getAllEvents()
 
     this.singlePanelUpdateServices.forEach((singlePanelUpdateService) => {
       singlePanelUpdateService.run(allEvents)
