@@ -5,8 +5,8 @@ export default class DBDexie {
 
   constructor() {
     this._db = new Dexie("cp-study-planner")
-    this._db.version(1).stores({
-      events: "id",
+    this._db.version(2).stores({
+      events: "id,*properties.tags",
     })
   }
 
@@ -32,7 +32,12 @@ export default class DBDexie {
     await this._db.events.delete(id)
   }
 
-  getTags() {
-    return new Set()
+  async getTags() {
+    let tags = []
+    await this._db.events.orderBy("properties.tags").keys((keysArr) => {
+      tags = [...keysArr]
+    })
+
+    return tags
   }
 }

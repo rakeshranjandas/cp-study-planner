@@ -57,6 +57,6 @@ const DUMMY_DB_INSTANCE = {
       })
     })
 
-    return tagSet
+    return Array.from(tagSet)
   },
 }

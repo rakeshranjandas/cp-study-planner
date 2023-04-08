@@ -5,13 +5,19 @@ import { DBCalendarServices } from "../../../services/db/DBCalendarServices"
 import { SYSTEM_TAG } from "../../../util/systemTags"
 
 export default function AddEditEventTagSelect(props) {
-  const options = React.useMemo(() => {
-    return DBCalendarServices.getAllTags()
-      .filter((tag) => tag !== SYSTEM_TAG.IS_SESSION)
-      .map((tag) => {
-        return { value: tag, label: tag }
-      })
-  })
+  const [options, setOptions] = React.useState([])
+
+  React.useEffect(() => {
+    DBCalendarServices.getAllTags().then((tags) => {
+      setOptions(
+        tags
+          .filter((tag) => tag !== SYSTEM_TAG.IS_SESSION)
+          .map((tag) => {
+            return { value: tag, label: tag }
+          })
+      )
+    })
+  }, [])
 
   const [selectedOptions, setSelectedOptions] = React.useState(
     props.selectedOptionValuesList

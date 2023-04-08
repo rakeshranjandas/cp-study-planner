@@ -4,11 +4,17 @@ import Select from "react-select"
 import { DBCalendarServices } from "../../../services/db/DBCalendarServices"
 
 export default function FilterByTagsBar(props) {
-  const options = React.useMemo(() => {
-    return DBCalendarServices.getAllTags().map((tag) => {
-      return { value: tag, label: tag }
+  const [options, setOptions] = React.useState([])
+
+  React.useEffect(() => {
+    DBCalendarServices.getAllTags().then((tags) => {
+      setOptions(
+        tags.map((tag) => {
+          return { value: tag, label: tag }
+        })
+      )
     })
-  })
+  }, [])
 
   const [selectedOptions, setSelectedOptions] = React.useState([])
 

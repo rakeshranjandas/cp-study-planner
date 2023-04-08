@@ -26,8 +26,10 @@ export const DBCalendarServices = {
     DBSingleton.getInstance().delete(id)
   },
 
-  getAllTags: () => {
-    const tagSet = DBSingleton.getInstance().getTags()
+  getAllTags: async () => {
+    const tagsArr = await DBSingleton.getInstance().getTags()
+
+    const tagSet = new Set(tagsArr)
 
     systemTags.forEach((sTag) => tagSet.add(sTag))
 
