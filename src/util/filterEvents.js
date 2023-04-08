@@ -41,6 +41,5 @@ export function isEventDone(event) {
 }
 
 export function isEventASession(event) {
-  console.log(event, "eee")
   return event?.properties?.tags?.includes(SYSTEM_TAG.IS_SESSION)
 }
