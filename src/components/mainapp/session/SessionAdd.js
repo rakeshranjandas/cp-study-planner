@@ -75,7 +75,20 @@ export default function SessionAdd(props) {
         </p> */}
 
         <p>
-          <label>Countdown scheme (currently in seconds)</label>
+          <label>
+            Countdown scheme
+            <span
+              style={{
+                fontStyle: "italic",
+                fontWeight: "bold",
+                fontSize: "0.9em",
+                color: "sky",
+                marginLeft: "2%",
+              }}
+            >
+              (mm:ss name color)
+            </span>
+          </label>
           <textarea
             rows="5"
             value={countdownScheme}

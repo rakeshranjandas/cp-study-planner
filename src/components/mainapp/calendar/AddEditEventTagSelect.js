@@ -2,20 +2,15 @@ import React from "react"
 
 import CreatableSelect from "react-select/creatable"
 import { DBCalendarServices } from "../../../services/db/DBCalendarServices"
-
-// const options = [
-//   { value: "chocolate", label: "Chocolate" },
-//   { value: "strawberry", label: "Strawberry" },
-//   { value: "vanilla", label: "Vanilla" },
-// ]
-
-// const selectedOptionValue = ["chocolate", "strawberry"]
+import { SYSTEM_TAG } from "../../../util/systemTags"
 
 export default function AddEditEventTagSelect(props) {
   const options = React.useMemo(() => {
-    return DBCalendarServices.getAllTags().map((tag) => {
-      return { value: tag, label: tag }
-    })
+    return DBCalendarServices.getAllTags()
+      .filter((tag) => tag !== SYSTEM_TAG.IS_SESSION)
+      .map((tag) => {
+        return { value: tag, label: tag }
+      })
   })
 
   const [selectedOptions, setSelectedOptions] = React.useState(
