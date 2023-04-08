@@ -1,4 +1,5 @@
 import React from "react"
+import { isEventDone } from "../../../util/filterEvents"
 
 export default function PanelSingleEvent(props) {
   return (
@@ -8,7 +9,7 @@ export default function PanelSingleEvent(props) {
         "app-calendar-event",
 
         ...[
-          props.event?.properties?.tags?.includes("done")
+          isEventDone(props.event)
             ? "app-calendar-event-done"
             : new Date(props.event.start) < new Date() &&
               "app-calendar-event-pending",

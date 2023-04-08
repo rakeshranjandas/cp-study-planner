@@ -5,6 +5,7 @@ import timeGridPlugin from "@fullcalendar/timegrid"
 import interactionPlugin from "@fullcalendar/interaction"
 import AddEditEventForm from "./AddEditEventForm"
 import { LoaderContext } from "../../../context/LoaderContext"
+import { isEventASession, isEventDone } from "../../../util/filterEvents"
 
 export default function AppCalendar(props) {
   const [addEditEvent, setAddEditEvent] = React.useState(null)
@@ -110,7 +111,9 @@ export default function AppCalendar(props) {
 
         appCalendarEventCopy.classNames = ["app-calendar-event"]
 
-        if (appCalendarEventCopy?.properties?.tags?.includes("done"))
+        if (isEventASession(appCalendarEventCopy))
+          appCalendarEventCopy.classNames.push("app-calendar-event-session")
+        else if (isEventDone(appCalendarEventCopy))
           appCalendarEventCopy.classNames.push("app-calendar-event-done")
         else if (new Date(appCalendarEventCopy.start) < new Date())
           appCalendarEventCopy.classNames.push("app-calendar-event-pending")
