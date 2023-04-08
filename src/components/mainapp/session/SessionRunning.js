@@ -26,7 +26,10 @@ export default function SessionRunning(props) {
             {props.curSession.phase.label}
           </p>
         </div>
-        <div className="session-running-time-div">
+        <div
+          className="session-running-time-div"
+          style={{ color: props.curSession.phase.color }}
+        >
           <span>
             {timeSecondsToHHMM(
               props.curSession.targetTime - props.curSession.elapsedTime
@@ -38,6 +41,7 @@ export default function SessionRunning(props) {
           {props.curSession.finished ? (
             <>
               <button onClick={() => props.clearCurSession()}>Clear</button>
+
               <button
                 onClick={() => {
                   props.closePopup()
