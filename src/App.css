@@ -176,6 +176,10 @@ a:not([href]):hover {
     color: black;
 }
 
+.app-calendar-event-session {
+    background-color: pink;
+}
+
 .app-calendar-event-done {
     background-color: var(--app-event-background-color-done)
 }

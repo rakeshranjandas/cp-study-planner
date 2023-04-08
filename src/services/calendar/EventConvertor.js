@@ -112,4 +112,4 @@ const Util = {
   },
 }
 
-// '#cp-study-calendar#{"tags":["dp","greedy"],"done":true}#/cp-study-calendar#'
+// '#cp-study-calendar#{"tags":["dp","greedy"]}#/cp-study-calendar#'

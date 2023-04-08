@@ -1,3 +1,4 @@
+import { systemTags } from "../../util/systemTags"
 import { DBSingleton } from "./DBSingleton"
 
 export const DBCalendarServices = {
@@ -26,6 +27,10 @@ export const DBCalendarServices = {
   },
 
   getAllTags: () => {
-    return DBSingleton.getInstance().getTags()
+    const tagSet = DBSingleton.getInstance().getTags()
+
+    systemTags.forEach((sTag) => tagSet.add(sTag))
+
+    return Array.from(tagSet)
   },
 }
