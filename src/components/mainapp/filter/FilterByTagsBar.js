@@ -28,7 +28,7 @@ export default function FilterByTagsBar(props) {
       isMulti
       name="colors"
       options={options}
-      placeholder="Filter by tags..."
+      placeholder="Show events with tags ..."
       onChange={changeSelectedOptions}
     />
   )
