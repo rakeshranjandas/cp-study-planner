@@ -4,8 +4,9 @@ import FilterByTagsBar from "./FilterByTagsBar"
 
 export default function FilterByTags(props) {
   function filterAppCalendarEvents(tagsList) {
-    const filteredEvents = DBCalendarServices.getAllEvents(tagsList)
-    props.setAppCalendarEvents(filteredEvents)
+    DBCalendarServices.getAllEvents(tagsList).then((filteredEvents) => {
+      props.setAppCalendarEvents(filteredEvents)
+    })
   }
 
   return (

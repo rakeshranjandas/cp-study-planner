@@ -20,8 +20,19 @@ export default class DBDexie {
     await this._db.events.add({ ...e })
   }
 
-  async get(tagsList) {
-    return this._db.events.toArray()
+  async get(tagsList = []) {
+    if (tagsList.length === 0) return this._db.events.toArray()
+
+    let filteredEvents = []
+
+    await this._db.events
+      .where("properties.tags")
+      .anyOf(tagsList)
+      .each((event) => {
+        filteredEvents.push(event)
+      })
+
+    return filteredEvents
   }
 
   async update(e) {
