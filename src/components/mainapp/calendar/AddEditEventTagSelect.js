@@ -19,11 +19,17 @@ export default function AddEditEventTagSelect(props) {
     })
   }, [])
 
-  const [selectedOptions, setSelectedOptions] = React.useState(
-    props.selectedOptionValuesList
-      ? options.filter((o) => props.selectedOptionValuesList.includes(o.value))
-      : []
-  )
+  const [selectedOptions, setSelectedOptions] = React.useState([])
+
+  React.useEffect(() => {
+    setSelectedOptions(
+      props.selectedOptionValuesList
+        ? options.filter((o) =>
+            props.selectedOptionValuesList.includes(o.value)
+          )
+        : []
+    )
+  }, options)
 
   function changeSelectedOptions(tagsObjectList) {
     setSelectedOptions(tagsObjectList)
