@@ -37,7 +37,20 @@ export const GoogleUserAPI = {
     params.append("code", authCode)
     params.append("grant_type", "authorization_code")
     params.append("redirect_uri", GoogleConstants.REDIRECT_URI)
-    params.append("scope", this.getCalendarScope())
+
+    return axios.post(
+      "https://www.googleapis.com/oauth2/v4/token",
+      params,
+      this._getHeadersWWWFormUrlEncoded()
+    )
+  },
+
+  refreshAccessToken: async function (refreshToken) {
+    const params = new URLSearchParams()
+    params.append("client_id", GoogleConstants.CLIENT_ID)
+    params.append("client_secret", GoogleConstants.CLIENT_SECRET)
+    params.append("grant_type", "refresh_token")
+    params.append("refresh_token", refreshToken)
 
     return axios.post(
       "https://www.googleapis.com/oauth2/v4/token",

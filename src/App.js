@@ -67,6 +67,24 @@ function App() {
     }
   }, [])
 
+  React.useEffect(() => {
+    const refreshGoogleTokenTimer = 1000 * 60 * 50
+
+    const refreshGoogleTokenInterval = setInterval(() => {
+      console.log("refreshGoogleTokenInterval")
+
+      if (GoogleAuthorizationLocalStorage.getAccessToken()) {
+        GoogleUserAPI.refreshAccessToken(
+          GoogleAuthorizationLocalStorage.getRefreshToken()
+        ).then((res) => {
+          GoogleAuthorizationLocalStorage.saveAccessToken(res.data.access_token)
+        })
+      }
+    }, refreshGoogleTokenTimer)
+
+    return () => clearInterval(refreshGoogleTokenInterval)
+  }, [])
+
   /* - LOADER - */
 
   const [showLoader, setShowLoader] = React.useState(false)
