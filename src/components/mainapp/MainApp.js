@@ -54,12 +54,10 @@ export default function MainApp() {
     () =>
       new CalendarService({
         panelsUpdater: panelsUpdater,
-        googleCalendarAPIInstance: new GoogleCalendarAPI(
-          user.user.access_token
-        ),
+        googleCalendarAPIInstance: new GoogleCalendarAPI(),
         setAppCalendarEvents: setAppCalendarEvents,
       }),
-    [panelsUpdater, setAppCalendarEvents, user.user.access_token]
+    [panelsUpdater, setAppCalendarEvents]
   )
 
   React.useEffect(() => {
