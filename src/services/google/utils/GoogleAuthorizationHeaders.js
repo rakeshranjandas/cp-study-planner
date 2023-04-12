@@ -1,14 +1,16 @@
-export class GoogleAuthorizationHeaders {
-  _bearer_token = null
+import { GoogleAuthorizationLocalStorage } from "./GoogleAuthorizationLocalStorage"
 
-  constructor(userAccessToken) {
-    this._bearer_token = userAccessToken
-  }
+export const GoogleAuthorizationHeaders = {
+  getBearerToken: function () {
+    return GoogleAuthorizationLocalStorage.getAccessToken()
+  },
 
-  getHeaders() {
+  getHeaders: function () {
+    const bearerToken = this.getBearerToken()
+
     return {
-      Authorization: `Bearer ${this._bearer_token}`,
+      Authorization: `Bearer ${bearerToken}`,
       Accept: "application/json",
     }
-  }
+  },
 }

@@ -4,8 +4,6 @@ import { GoogleAuthorizationHeaders } from "./utils/GoogleAuthorizationHeaders"
 const GOOGLE_APIS_CALENDAR = "https://www.googleapis.com/calendar/v3/"
 
 export class GoogleCalendarAPI {
-  _googleAuthorizationHeaders = null
-
   _calendarSummary = "CP-Study-Planner"
   _googleCalendarId = "CALENDAR-ID"
 
@@ -21,14 +19,8 @@ export class GoogleCalendarAPI {
     return true
   }
 
-  constructor(userAccessToken) {
-    this._googleAuthorizationHeaders = new GoogleAuthorizationHeaders(
-      userAccessToken
-    )
-  }
-
   _headers = () => {
-    return this._googleAuthorizationHeaders.getHeaders()
+    return GoogleAuthorizationHeaders.getHeaders()
   }
 
   _get = async (url) => {
