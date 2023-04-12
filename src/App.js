@@ -54,7 +54,9 @@ function App() {
   React.useEffect(() => {
     if (isLoggedIn) {
       GoogleUserAPI.getProfile()
-        .then((profile) => setProfile(profile))
+        .then((res) => {
+          setProfile(res.data)
+        })
         .catch(() => logout())
     }
   }, [isLoggedIn])
