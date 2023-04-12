@@ -2,59 +2,70 @@ import "./App.css"
 import React from "react"
 import { googleLogout, useGoogleLogin } from "@react-oauth/google"
 import { GoogleUserAPI } from "./services/google/GoogleUserAPI"
-import { LoggedUserLocalStorage } from "./services/user/LoggedUserLocalStorage"
 import MainApp from "./components/mainapp/MainApp"
 import LandingPageNoLogin from "./components/LandingPageNoLogin"
 import { UserContext } from "./context/UserContext"
 import { ProfileContext } from "./context/ProfileContext"
 import { LoaderContext } from "./context/LoaderContext"
 import Loader from "./components/common/Loader"
+import { GoogleAuthorizationLocalStorage } from "./services/google/utils/GoogleAuthorizationLocalStorage"
 
 function App() {
-  const [user, setUser] = React.useState(null)
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false)
   const [profile, setProfile] = React.useState(null)
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => {
-      setUser(codeResponse)
+      console.log(codeResponse, "codeResponse")
+
+      GoogleUserAPI.getAccessTokenFromAuthCode(codeResponse.code).then(
+        (res) => {
+          const resData = res.data
+          console.log(resData, "getAccessToken")
+
+          GoogleAuthorizationLocalStorage.saveAccessToken(resData.access_token)
+          GoogleAuthorizationLocalStorage.saveRefreshToken(
+            resData.refresh_token
+          )
+          setIsLoggedIn(true)
+        }
+      )
     },
     onError: (error) => alert("Login Failed:", error),
     scope: GoogleUserAPI.getCalendarScope(),
+    flow: "auth-code",
+    responseType: "code",
+    accessType: "offline",
+    includeGrantedScopes: true,
   })
 
   const logout = () => {
-    googleLogout()
+    GoogleUserAPI.revokeAccessToken(
+      GoogleAuthorizationLocalStorage.getAccessToken()
+    ).then(() => {
+      googleLogout()
 
-    LoggedUserLocalStorage.destroy()
-    setUser(null)
-    setProfile(null)
+      GoogleAuthorizationLocalStorage.removeTokens()
+      setProfile(null)
+      setIsLoggedIn(false)
+    })
   }
 
-  const saveUserToLocalStorage = React.useCallback((toSaveUser) => {
-    LoggedUserLocalStorage.save(toSaveUser)
-  }, [])
-
-  const getSavedUserFromLocalStorage = React.useCallback(() => {
-    return LoggedUserLocalStorage.get()
-  }, [])
-
-  const setupProfile = React.useCallback(() => {
-    GoogleUserAPI.getProfile(
-      user.access_token,
-      (profileData) => setProfile(profileData),
-      () => logout()
-    )
-  }, [user])
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      GoogleUserAPI.getProfile()
+        .then((profile) => setProfile(profile))
+        .catch(() => logout())
+    }
+  }, [isLoggedIn])
 
   React.useEffect(() => {
-    if (user) {
-      saveUserToLocalStorage(user)
-      setupProfile()
-    } else {
-      const savedUser = getSavedUserFromLocalStorage()
-      if (savedUser) setUser(savedUser)
+    if (GoogleAuthorizationLocalStorage.getAccessToken()) {
+      setIsLoggedIn(true)
     }
-  }, [user, saveUserToLocalStorage, setupProfile])
+  }, [])
+
+  /* - LOADER - */
 
   const [showLoader, setShowLoader] = React.useState(false)
 
@@ -66,17 +77,19 @@ function App() {
     setShowLoader(false)
   }
 
+  /* - LOADER - */
+
   return (
     <>
       <LoaderContext.Provider
         value={{ show: showLoaderFn, hide: hideLoaderFn }}
       >
-        {user ? (
-          <UserContext.Provider value={{ user: user, logout: logout }}>
+        {isLoggedIn ? (
+          <UserContext.Provider value={{ logout: logout }}>
             <ProfileContext.Provider value={profile}>
-            <MainApp />
-          </ProfileContext.Provider>
-        </UserContext.Provider>
+              <MainApp />
+            </ProfileContext.Provider>
+          </UserContext.Provider>
         ) : (
           <LandingPageNoLogin login={login} />
         )}
