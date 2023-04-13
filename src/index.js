@@ -5,13 +5,11 @@ import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 
 import { GoogleOAuthProvider } from "@react-oauth/google"
-
-const GOOGLE_CLIENT_ID =
-  "995729197369-664mpelo0hrubg2t7k2vudsrg1i7evpf.apps.googleusercontent.com"
+import { GoogleConstants } from "./constants/GoogleConstants"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
-  <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+  <GoogleOAuthProvider clientId={GoogleConstants.CLIENT_ID}>
     <React.StrictMode>
       <App />
     </React.StrictMode>
