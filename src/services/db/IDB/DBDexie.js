@@ -53,6 +53,7 @@ export default class DBDexie {
   }
 
   async deleteDB() {
+    console.log("deleteDB")
     await this._db.delete()
   }
 }
