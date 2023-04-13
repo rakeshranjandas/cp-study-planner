@@ -1,5 +1,4 @@
-import { update } from "xstate/lib/actionTypes"
-import { isEventDone } from "../../util/filterEvents"
+import { markEventDone } from "../../util/filterEvents"
 import { sessionToAppCalendarEvent } from "../calendar/EventConvertor"
 
 export class SessionEventService {
@@ -37,10 +36,7 @@ export class SessionEventService {
 
   async markAppCalendarEventDone(doneEventId, appCalendarEvents) {
     const appEvent = appCalendarEvents.find((ev) => ev.id === doneEventId)
-    const copiedAppEvent = structuredClone(appEvent)
-
-    if (!isEventDone(copiedAppEvent))
-      copiedAppEvent.properties.tags.push("done")
+    const copiedAppEvent = markEventDone(structuredClone(appEvent))
 
     return this.calendarService.updateGoogleCalendarEvent(copiedAppEvent)
   }

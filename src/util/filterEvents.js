@@ -43,3 +43,15 @@ export function isEventDone(event) {
 export function isEventASession(event) {
   return event?.properties?.tags?.includes(SYSTEM_TAG.IS_SESSION)
 }
+
+export function markEventDone(event) {
+  const tagSet = new Set(event?.properties?.tags)
+  tagSet.add(SYSTEM_TAG.IS_DONE)
+
+  const copiedEvent = {
+    ...event,
+    properties: { ...event.properties, tags: Array.from(tagSet) },
+  }
+
+  return copiedEvent
+}
