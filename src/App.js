@@ -9,6 +9,7 @@ import { ProfileContext } from "./context/ProfileContext"
 import { LoaderContext } from "./context/LoaderContext"
 import Loader from "./components/common/Loader"
 import { GoogleAuthorizationLocalStorage } from "./services/google/utils/GoogleAuthorizationLocalStorage"
+import { DBCalendarServices } from "./services/db/DBCalendarServices"
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false)
@@ -48,6 +49,7 @@ function App() {
       GoogleAuthorizationLocalStorage.removeTokens()
       setProfile(null)
       setIsLoggedIn(false)
+      DBCalendarServices.deleteDB()
     })
   }
 

@@ -51,4 +51,8 @@ export default class DBDexie {
 
     return tags
   }
+
+  async deleteDB() {
+    await this._db.delete()
+  }
 }

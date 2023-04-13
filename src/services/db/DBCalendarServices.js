@@ -35,4 +35,8 @@ export const DBCalendarServices = {
 
     return Array.from(tagSet)
   },
+
+  deleteDB: async () => {
+    return DBSingleton.deleteDB()
+  },
 }
