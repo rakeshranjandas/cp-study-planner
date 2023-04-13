@@ -6,30 +6,36 @@ import { SYSTEM_TAG } from "../../../util/systemTags"
 
 export default function AddEditEventTagSelect(props) {
   const [options, setOptions] = React.useState([])
-
-  React.useEffect(() => {
-    DBCalendarServices.getAllTags().then((tags) => {
-      setOptions(
-        tags
-          .filter((tag) => tag !== SYSTEM_TAG.IS_SESSION)
-          .map((tag) => {
-            return { value: tag, label: tag }
-          })
-      )
-    })
-  }, [])
-
   const [selectedOptions, setSelectedOptions] = React.useState([])
 
   React.useEffect(() => {
-    setSelectedOptions(
-      props.selectedOptionValuesList
-        ? options.filter((o) =>
+    DBCalendarServices.getAllTags().then((tags) => {
+      const showTags = tags
+        .filter((tag) => tag !== SYSTEM_TAG.IS_SESSION)
+        .map((tag) => {
+          return { value: tag, label: tag }
+        })
+
+      const selectedTags = props.selectedOptionValuesList
+        ? showTags.filter((o) =>
             props.selectedOptionValuesList.includes(o.value)
           )
         : []
-    )
-  }, options)
+
+      if (props.selectedOptionValuesList?.includes(SYSTEM_TAG.IS_SESSION)) {
+        const isSessionTag = {
+          value: SYSTEM_TAG.IS_SESSION,
+          label: SYSTEM_TAG.IS_SESSION,
+        }
+
+        showTags.push(isSessionTag)
+        selectedTags.push(isSessionTag)
+      }
+
+      setSelectedOptions(selectedTags)
+      setOptions(showTags)
+    })
+  }, [])
 
   function changeSelectedOptions(tagsObjectList) {
     setSelectedOptions(tagsObjectList)
