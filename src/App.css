@@ -23,6 +23,34 @@ a:not([href]):hover {
 
 /* -- End - Full Calendar and Bootstrap adjustments  -- */
 
+.login-bg {
+    width: 100%;
+    height: 100vh;
+    background-color: #e1e1e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    background-color: white;
+    padding: 2em;
+    border-radius: 12px;
+    border: 2px solid darkblue;
+}
+
+.login-container > p {
+    text-align: center;
+    font-size: large;
+}
+
+.login-google-icon {
+    width: 15%;
+    position: relative;
+    top: 14%;
+    margin-left: 0.3em;
+}
+
 .grid-container {
     display: grid;
     grid-template-columns: 5px repeat(10, minmax(100px, 1fr)) 5px;
@@ -108,7 +136,7 @@ a:not([href]):hover {
     background-color: rgba(0,0,0,0.5);
     top: 0;
     left: 0;
-    height: 100%;
+    height: 200%;
     width: 100%;
 }
 
@@ -152,9 +180,9 @@ a:not([href]):hover {
 }
 
 .app-calendar-add-edit-event {
-    top: 15%;
+    top: 5%;
     left: 30%;
-    min-height: 70%;
+    /* min-height: 70%; */
     width: 30%;
     background-color: white;
 }
@@ -188,10 +216,6 @@ a:not([href]):hover {
     background-color: var(--app-event-background-color-pending)
 }
 
-.filter-div {
-    padding: 1%;
-}
-
 .session-div {
     height: 100%;
 }
@@ -223,7 +247,7 @@ a:not([href]):hover {
 .session-popup-main {
     top: 5%;
     left: 30%;
-    min-height: 70%;
+    /* min-height: 70%; */
     width: 40%;
     background-color: white;
 }
@@ -288,11 +312,11 @@ a:not([href]):hover {
 }
 
 .session-add-tasks-choice-div {
-    background-color: red;
+    background-color: rgb(245, 124, 124);
 }
 
 .session-add-tasks-added-div {
-    background-color: yellow;
+    background-color: rgb(255, 255, 163);
 }
 
 .session-add-tasks-choice-list-div {
