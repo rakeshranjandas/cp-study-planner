@@ -143,19 +143,23 @@ a:not([href]):hover {
 .popup-content {
     position: absolute;
     z-index: 8;
+    border: 1px solid black;
 }
 
 .popup-header {
     text-align: center;
-    border: 1px solid black;
+    border-bottom: 1px solid black;
 }
 
-.popup-header h2 {
-    display: inline-block;
+.popup-header-text {
+    font-size: 2.3em;
+    padding: 0.2em;
 }
 
 .popup-close {
-    float: right;
+    position: absolute;
+    top: 0;
+    right: 0;
     font-weight: bold;
     border: 1px solid #1f66b6;
     padding: 5px;

@@ -30,7 +30,9 @@ export default function AddEditEventForm(props) {
       <div className="popup-content app-calendar-add-edit-event">
         <div>
           <div className="popup-header app-calendar-add-edit-event-header-div">
-            <h2>{curEvent.id ? "Edit" : "Add"} Event</h2>
+            <div className="popup-header-text">
+              {curEvent.id ? "Edit" : "Add"} Event
+            </div>
             <span
               className="popup-close"
               onClick={() => props.setShowAddEditForm(false)}

@@ -47,7 +47,7 @@ export default function SessionAdd(props) {
   return (
     <div>
       <div className="popup-header session-add-header-div">
-        <h2>Add New Session</h2>
+        <div className="popup-header-text">Add New Session</div>
         <span className="popup-close" onClick={() => props.closePopup(false)}>
           X
         </span>
