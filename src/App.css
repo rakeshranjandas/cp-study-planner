@@ -359,6 +359,9 @@ a:not([href]):hover {
     display: flex;
     flex-direction: column;
     gap: 2px;
+    overflow: hidden;
+    max-height: 31vh;
+    overflow-y: scroll;
 }
 
 .panel-list-single-div {
