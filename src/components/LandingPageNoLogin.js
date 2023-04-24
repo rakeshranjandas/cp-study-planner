@@ -10,7 +10,7 @@ export default function LandingPageNoLogin(props) {
         </p>
         <p>
           <button onClick={() => props.login()}>
-            <span>Login using </span>
+            <span>Login with </span>
             <span>
               <img src={GoogleIcon} className="login-google-icon" />
             </span>
