@@ -11,7 +11,7 @@ export default class DBDexie {
   }
 
   async load(eList) {
-    this._db.events.clear().then(() => {
+    await this._db.events.clear().then(() => {
       eList.forEach((e) => this._db.events.add({ ...e }))
     })
   }
