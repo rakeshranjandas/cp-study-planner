@@ -56,4 +56,9 @@ export default class DBDexie {
     console.log("deleteDB")
     await this._db.delete()
   }
+
+  close() {
+    this._db.close()
+    this._db = null
+  }
 }

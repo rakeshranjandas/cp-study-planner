@@ -38,5 +38,7 @@ export const DBCalendarServices = {
 
   deleteDB: async () => {
     await DBSingleton.getInstance().deleteDB()
+    DBSingleton.getInstance().close()
+    DBSingleton.end()
   },
 }

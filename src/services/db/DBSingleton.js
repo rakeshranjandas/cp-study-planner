@@ -8,6 +8,10 @@ export class DBSingleton {
 
     return this.dbInstance
   }
+
+  static end() {
+    this.dbInstance = null
+  }
 }
 
 function initialiseDBInstance() {
