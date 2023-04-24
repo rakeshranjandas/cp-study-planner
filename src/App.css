@@ -311,6 +311,12 @@ a:not([href]):hover {
     padding: 2%;
 }
 
+.session-add-tasks-div p {
+    cursor: pointer;
+    text-align: center;
+    margin: 0.2em;
+}
+
 .session-add-tasks-choice-div {
     background-color: rgb(245, 124, 124);
 }
@@ -321,7 +327,7 @@ a:not([href]):hover {
 
 .session-add-tasks-choice-list-div {
     overflow: hidden;
-    max-height: 80%;
+    height: 63%;
     overflow-y: scroll;
     margin-top: 10%;
 }
