@@ -8,13 +8,14 @@ import { TodayPanelUpdateService } from "../../services/panelupdate/TodayPanelUp
 import { BacklogPanelUpdateService } from "../../services/panelupdate/BacklogPanelUpdateService"
 import FilterByTags from "./filter/FilterByTags"
 import Session from "./session/Session"
-import { UserContext } from "../../context/UserContext"
 import { CalendarService } from "../../services/calendar/CalendarService"
 import { GoogleCalendarAPI } from "../../services/google/GoogleCalendarAPI"
 import { useMachine } from "@xstate/react"
 import { calendarMachine } from "./calendar/calendarMachine"
+import LoadingImage from "../../assets/images/loading-calendar.gif"
 
 export default function MainApp() {
+  const [loaded, setLoaded] = React.useState(false)
   const [appCalendarEvents, setAppCalendarEvents] = React.useState([])
   const [todayEvents, setTodayEvents] = React.useState([])
   const [backlogEvents, setBacklogEvents] = React.useState([])
@@ -61,13 +62,14 @@ export default function MainApp() {
     [panelsUpdater, setAppCalendarEvents]
   )
 
-  // React.useEffect(() => {
-  //   const panelUpdaterInterval = setInterval(() => {
-  //     panelsUpdater.run()
-  //   }, 1000 * 60 * 5)
+  React.useEffect(() => {
+    if (!loaded) return
+    const panelUpdaterInterval = setInterval(() => {
+      panelsUpdater.run()
+    }, 1000 * 60 * 5)
 
-  //   return () => clearInterval(panelUpdaterInterval)
-  // }, [])
+    return () => clearInterval(panelUpdaterInterval)
+  }, [])
 
   const [state, send] = useMachine(calendarMachine, {
     context: {
@@ -92,13 +94,14 @@ export default function MainApp() {
 
       loadAppCalendarEvents: async (context) => {
         await context.calendarService.loadEvents()
+        setLoaded(true)
       },
     },
   })
 
   return (
     <>
-      {state.matches("ViewAppCalendar.Show") ? (
+      {loaded ? (
         <div className="grid-container">
           <div className="grid-item item-logout">
             <Logout />
@@ -134,7 +137,8 @@ export default function MainApp() {
         </div>
       ) : (
         <div className="loading-events-div">
-          Loading calendar events. Please wait...
+          Loading calendar events
+          <img src={LoadingImage} />
         </div>
       )}
     </>

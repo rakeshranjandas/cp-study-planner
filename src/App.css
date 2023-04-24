@@ -60,6 +60,11 @@ a:not([href]):hover {
     font-weight: lighter;
 }
 
+.loading-events-div > img {
+    width: 3%;
+    margin-left: 0.5em;
+}
+
 .grid-container {
     display: grid;
     grid-template-columns: 5px repeat(10, minmax(100px, 1fr)) 5px;
