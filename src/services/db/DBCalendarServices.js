@@ -1,11 +1,6 @@
-import { systemTags } from "../../util/systemTags"
 import { DBSingleton } from "./DBSingleton"
 
 export const DBCalendarServices = {
-  addEvent: (e) => {
-    DBSingleton.getInstance().add(e)
-  },
-
   getAllEvents: async (tagsList) => {
     return DBSingleton.getInstance().get(tagsList)
   },
