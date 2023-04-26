@@ -41,25 +41,29 @@ function App() {
   })
 
   const logout = () => {
-    GoogleUserAPI.revokeAccessToken(
-      GoogleAuthorizationLocalStorage.getAccessToken()
-    ).then(() => {
+    const logoutAction = () => {
       googleLogout()
 
       GoogleAuthorizationLocalStorage.removeTokens()
       setProfile(null)
       setIsLoggedIn(false)
       DBCalendarServices.deleteDB()
-    })
+    }
+
+    GoogleUserAPI.revokeAccessToken().then(
+      () => logoutAction(),
+      () => logoutAction()
+    )
   }
 
   React.useEffect(() => {
     if (isLoggedIn) {
-      GoogleUserAPI.getProfile()
-        .then((res) => {
+      GoogleUserAPI.getProfile().then(
+        (res) => {
           setProfile(res.data)
-        })
-        .catch(() => logout())
+        },
+        () => logout()
+      )
     }
   }, [isLoggedIn])
 
