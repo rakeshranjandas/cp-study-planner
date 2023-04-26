@@ -110,9 +110,7 @@ export default function AppCalendar(props) {
   const appCalendarEventsColored = React.useMemo(
     () =>
       props.appCalendarEvents.map((appCalendarEvent) => {
-        const appCalendarEventCopy = JSON.parse(
-          JSON.stringify(appCalendarEvent)
-        )
+        const appCalendarEventCopy = structuredClone(appCalendarEvent)
 
         appCalendarEventCopy.classNames = ["app-calendar-event"]
 
@@ -122,6 +120,11 @@ export default function AppCalendar(props) {
           appCalendarEventCopy.classNames.push("app-calendar-event-done")
         else if (new Date(appCalendarEventCopy.start) < new Date())
           appCalendarEventCopy.classNames.push("app-calendar-event-pending")
+
+        if (appCalendarEventCopy?.properties?.sr) {
+          appCalendarEventCopy.title +=
+            " <" + appCalendarEventCopy.properties.sr.day.toString() + ">"
+        }
 
         return appCalendarEventCopy
       }),
