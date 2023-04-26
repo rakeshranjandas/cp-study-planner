@@ -26,7 +26,7 @@ export default function AddEditEventTagSelect(props) {
       setOptions(_withValueAndLabel(showTags))
       setSelectedOptions(_withValueAndLabel(selectedTags))
     })
-  }, [])
+  }, [props.selectedOptionValuesList])
 
   function changeSelectedOptions(tagsObjectList) {
     setSelectedOptions(tagsObjectList)

@@ -10,7 +10,6 @@ export default function Calendar(props) {
         setAppCalendarEvents={props.setAppCalendarEvents}
         calendarService={props.calendarService}
       />
-      )
     </>
   )
 }
