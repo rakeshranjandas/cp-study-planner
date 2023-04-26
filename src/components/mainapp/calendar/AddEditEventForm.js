@@ -17,13 +17,41 @@ function getHTMLDateTimeValue(dateTime) {
 
 export default function AddEditEventForm(props) {
   const [curEvent, setCurEvent] = React.useState({
+    ...(props.addEditEvent.id && { id: props.addEditEvent.id }),
     start: getHTMLDateTimeValue(props.addEditEvent.start), // All-day startStr only contains date
     end: getHTMLDateTimeValue(props.addEditEvent.end),
     title: props.addEditEvent.title ?? "",
     description: props.addEditEvent.description ?? "",
     properties: props.addEditEvent.properties ?? {},
-    ...(props.addEditEvent.id && { id: props.addEditEvent.id }),
+
+    formSR: props?.addEditEvent?.properties?.sr, // SR setting that shows in the form
   })
+
+  const srActions = {
+    isDisabled: () => {
+      return !!props.addEditEvent?.properties?.sr
+    },
+
+    isChecked: () => {
+      return !!curEvent.formSR
+    },
+
+    setChecked: (checked) => {
+      if (srActions.isDisabled()) return
+
+      setCurEvent((oldCurEvent) => {
+        return {
+          ...oldCurEvent,
+          formSR: checked
+            ? {
+                ...oldCurEvent.formSR,
+                scheme: "1,7,16,35",
+              }
+            : null,
+        }
+      })
+    },
+  }
 
   return (
     <div className="popup-bg">
@@ -61,6 +89,18 @@ export default function AddEditEventForm(props) {
                   setCurEvent({ ...curEvent, end: e.target.value })
                 }
               />
+            </p>
+
+            <p>
+              <label>
+                Is Spaced-Repetition (1, 7, 16, 35):
+                <input
+                  disabled={srActions.isDisabled()}
+                  type="checkbox"
+                  checked={srActions.isChecked()}
+                  onChange={(e) => srActions.setChecked(e.target.checked)}
+                />
+              </label>
             </p>
 
             <p>
@@ -108,6 +148,12 @@ export default function AddEditEventForm(props) {
                     alert("Provide title")
                     return false
                   }
+
+                  if (curEvent?.properties?.sr) {
+                    alert("Cannot edit a Spaced-Repetition event")
+                    return false
+                  }
+
                   props.addEditSubmitHandler({ ...curEvent })
                 }}
               >
