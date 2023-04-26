@@ -27,13 +27,7 @@ export const DBCalendarServices = {
   },
 
   getAllTags: async () => {
-    const tagsArr = await DBSingleton.getInstance().getTags()
-
-    const tagSet = new Set(tagsArr)
-
-    systemTags.forEach((sTag) => tagSet.add(sTag))
-
-    return Array.from(tagSet)
+    return DBSingleton.getInstance().getTags()
   },
 
   deleteDB: async () => {

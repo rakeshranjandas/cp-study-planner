@@ -1,39 +1,30 @@
 import React from "react"
 
 import CreatableSelect from "react-select/creatable"
-import { DBCalendarServices } from "../../../services/db/DBCalendarServices"
-import { SYSTEM_TAG } from "../../../util/systemTags"
+import { TagsGetter } from "../../../services/tags/TagsGetter"
 
 export default function AddEditEventTagSelect(props) {
   const [options, setOptions] = React.useState([])
   const [selectedOptions, setSelectedOptions] = React.useState([])
 
   React.useEffect(() => {
-    DBCalendarServices.getAllTags().then((tags) => {
-      const showTags = tags
-        .filter((tag) => tag !== SYSTEM_TAG.IS_SESSION)
-        .map((tag) => {
-          return { value: tag, label: tag }
+    TagsGetter.forAddEventForm().then((tags) => {
+      const selectedTags = props.selectedOptionValuesList ?? []
+
+      const tagSet = new Set(tags)
+      selectedTags.forEach((selectedTag) => tagSet.add(selectedTag))
+      const showTags = Array.from(tagSet)
+
+      const _withValueAndLabel = (tags) =>
+        tags.map((t) => {
+          return {
+            value: t,
+            label: t,
+          }
         })
 
-      const selectedTags = props.selectedOptionValuesList
-        ? showTags.filter((o) =>
-            props.selectedOptionValuesList.includes(o.value)
-          )
-        : []
-
-      if (props.selectedOptionValuesList?.includes(SYSTEM_TAG.IS_SESSION)) {
-        const isSessionTag = {
-          value: SYSTEM_TAG.IS_SESSION,
-          label: SYSTEM_TAG.IS_SESSION,
-        }
-
-        showTags.push(isSessionTag)
-        selectedTags.push(isSessionTag)
-      }
-
-      setSelectedOptions(selectedTags)
-      setOptions(showTags)
+      setOptions(_withValueAndLabel(showTags))
+      setSelectedOptions(_withValueAndLabel(selectedTags))
     })
   }, [])
 
