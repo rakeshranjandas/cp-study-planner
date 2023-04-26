@@ -11,7 +11,8 @@ export const SREventsGenerator = {
     firstAppEvent.properties.sr = {
       scheme: schemeList,
       id: srId,
-      day: schemeArr[0],
+      schemeDay: schemeArr[0],
+      day: 1,
     }
 
     const appEventsList = [firstAppEvent]
@@ -21,7 +22,8 @@ export const SREventsGenerator = {
       const nAppEvent = structuredClone(firstAppEvent)
       nAppEvent.start = this._addDays(firstAppEvent.start, daysDiff)
       nAppEvent.end = this._addDays(firstAppEvent.end, daysDiff)
-      nAppEvent.properties.sr.day = schemeArr[i]
+      nAppEvent.properties.sr.schemeDay = schemeArr[i]
+      nAppEvent.properties.sr.day = i + 1
 
       appEventsList.push(nAppEvent)
     }
