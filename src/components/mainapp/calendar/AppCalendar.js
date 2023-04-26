@@ -28,10 +28,13 @@ export default function AppCalendar(props) {
       loader.show()
 
       props.calendarService
-        .addGoogleCalendarEvent(addInput)
-        .then((addedEvent) => {
-          console.log(addedEvent)
-          props.appCalendarEventActions.add(addedEvent)
+        .addEvent(addInput)
+        .then((addedAppEvents) => {
+          console.log("addedAppEvents", addedAppEvents)
+
+          addedAppEvents.forEach((addedAppEvent) =>
+            props.appCalendarEventActions.add(addedAppEvent)
+          )
           setShowAddEditForm(false)
           loader.hide()
         })

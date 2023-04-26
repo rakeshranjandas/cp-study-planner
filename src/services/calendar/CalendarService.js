@@ -3,6 +3,7 @@ import {
   googleCalendarEventToAppCalendarEvent,
   appCalendarEventToGoogleCalendarEvent,
 } from "./EventConvertor"
+import { SREventsGenerator } from "./SREventsGenerator"
 
 export class CalendarService {
   panelsUpdater = null
@@ -46,6 +47,18 @@ export class CalendarService {
     await this.panelsUpdater.run()
 
     this.setAppCalendarEvents(appCalendarEvents)
+  }
+
+  async addEvent(appEvent) {
+    const appEvents = SREventsGenerator.generate(appEvent)
+    const addedAppEvents = []
+
+    for (let i = 0; i < appEvents.length; i++) {
+      const addedAppEvent = await this.addGoogleCalendarEvent(appEvents[i])
+      addedAppEvents.push(addedAppEvent)
+    }
+
+    return addedAppEvents
   }
 
   async addGoogleCalendarEvent(appEvent) {
