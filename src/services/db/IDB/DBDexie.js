@@ -6,7 +6,7 @@ export default class DBDexie {
   constructor() {
     this._db = new Dexie("cp-study-planner")
     this._db.version(2).stores({
-      events: "id,*properties.tags",
+      events: "id,*properties.tags,*properties.sr.id",
     })
   }
 
