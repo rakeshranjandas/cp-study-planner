@@ -1,10 +1,10 @@
 import { SYSTEM_TAG } from "./systemTags"
+import { getTodayStartDate, getTomorrowStartDate } from "./dates"
 
 export function filterTodayEvents(allEvents) {
-  const todayDate = new Date(new Date().setHours(0, 0, 0, 0))
-  const tomorroDate = new Date(
-    new Date(new Date().getTime() + 24 * 60 * 60 * 1000).setHours(0, 0, 0, 0)
-  )
+  const todayDate = getTodayStartDate()
+  const tomorroDate = getTomorrowStartDate()
+
   const todayEvents = allEvents.filter((event) => {
     const eventDateTime = new Date(event.start)
     return (
@@ -18,7 +18,7 @@ export function filterTodayEvents(allEvents) {
 }
 
 export function filterBacklogEvents(allEvents) {
-  const todayDate = new Date(new Date().setHours(0, 0, 0, 0))
+  const todayDate = getTodayStartDate()
 
   const backlogEvents = allEvents.filter((event) => {
     const eventDate = new Date(event.start)
