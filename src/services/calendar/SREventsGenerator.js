@@ -1,3 +1,5 @@
+import { SYSTEM_TAG } from "../../util/systemTags"
+
 export const SREventsGenerator = {
   generate: function (appEvent) {
     if (!appEvent.formSR) return [appEvent]
@@ -27,6 +29,14 @@ export const SREventsGenerator = {
 
       appEventsList.push(nAppEvent)
     }
+
+    // Add is-sr tags
+    appEventsList.forEach(
+      (appEvent) =>
+        (appEvent.properties.tags = Array.from(
+          new Set(appEvent.properties.tags ?? []).add(SYSTEM_TAG.IS_SR)
+        ))
+    )
 
     return appEventsList
   },
