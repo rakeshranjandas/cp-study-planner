@@ -125,6 +125,11 @@ a:not([href]):hover {
     cursor: pointer;
 }
 
+.logout-manage-sr-icon {
+    filter: invert(76%) sepia(13%) saturate(3207%) hue-rotate(6deg) brightness(95%) contrast(80%);
+    cursor: pointer;
+}
+
 .loader-calendar-div {
     display: inline-block;
     height: 100%;
