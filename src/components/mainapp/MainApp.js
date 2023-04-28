@@ -13,12 +13,14 @@ import { GoogleCalendarAPI } from "../../services/google/GoogleCalendarAPI"
 import { useMachine } from "@xstate/react"
 import { calendarMachine } from "./calendar/calendarMachine"
 import LoadingImage from "../../assets/images/loading-calendar.gif"
+import { isEventAnSR } from "../../util/filterEvents"
 
 export default function MainApp() {
   const [loaded, setLoaded] = React.useState(false)
   const [appCalendarEvents, setAppCalendarEvents] = React.useState([])
   const [todayEvents, setTodayEvents] = React.useState([])
   const [backlogEvents, setBacklogEvents] = React.useState([])
+  const [srBacklogs, setSrBacklogs] = React.useState([])
 
   const appCalendarEventActions = React.useMemo(() => {
     return {
@@ -71,6 +73,18 @@ export default function MainApp() {
     return () => clearInterval(panelUpdaterInterval)
   }, [])
 
+  React.useEffect(() => {
+    const srBacklogIdSet = new Set()
+
+    backlogEvents.forEach((backlogEvent) => {
+      if (isEventAnSR(backlogEvent))
+        srBacklogIdSet.add(backlogEvent.properties.sr.id)
+    })
+
+    const srBacklogIdArr = Array.from(srBacklogIdSet)
+    setSrBacklogs(srBacklogIdArr)
+  }, [backlogEvents])
+
   const [state, send] = useMachine(calendarMachine, {
     context: {
       calendarService: calendarService,
@@ -104,7 +118,7 @@ export default function MainApp() {
       {loaded ? (
         <div className="grid-container">
           <div className="grid-item item-logout">
-            <Logout />
+            <Logout srBacklogs={srBacklogs} />
           </div>
 
           <div className="grid-item item-calendar">

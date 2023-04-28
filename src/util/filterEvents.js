@@ -44,6 +44,10 @@ export function isEventASession(event) {
   return event?.properties?.tags?.includes(SYSTEM_TAG.IS_SESSION)
 }
 
+export function isEventAnSR(event) {
+  return event?.properties?.tags?.includes(SYSTEM_TAG.IS_SR)
+}
+
 function _addTagToEvent(event, [tagList]) {
   const tagSet = new Set(event?.properties?.tags)
 
