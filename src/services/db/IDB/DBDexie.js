@@ -1,4 +1,5 @@
 import Dexie from "dexie"
+import { getTomorrowStartDate } from "../../../util/dates"
 
 export default class DBDexie {
   _db = null
@@ -6,7 +7,7 @@ export default class DBDexie {
   constructor() {
     this._db = new Dexie("cp-study-planner")
     this._db.version(2).stores({
-      events: "id,*properties.tags,*properties.sr.id",
+      events: "id,*properties.tags,*properties.sr.id,*startTimestamp",
     })
   }
 
@@ -28,6 +29,21 @@ export default class DBDexie {
     await this._db.events
       .where("properties.tags")
       .anyOf(tagsList)
+      .each((event) => {
+        filteredEvents.push(event)
+      })
+
+    return filteredEvents
+  }
+
+  async getTodayAndPast() {
+    let filteredEvents = []
+
+    const tomorrowStartTimestamp = getTomorrowStartDate().getTime()
+
+    await this._db.events
+      .where("startTimestamp")
+      .below(tomorrowStartTimestamp)
       .each((event) => {
         filteredEvents.push(event)
       })

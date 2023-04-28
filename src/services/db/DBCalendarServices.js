@@ -5,6 +5,10 @@ export const DBCalendarServices = {
     return DBSingleton.getInstance().get(tagsList)
   },
 
+  getAllEventsTodayAndPast: async () => {
+    return DBSingleton.getInstance().getTodayAndPast()
+  },
+
   loadAllEvents: async (allEvents = []) => {
     await DBSingleton.getInstance().load(allEvents)
   },

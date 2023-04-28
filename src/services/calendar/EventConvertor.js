@@ -13,6 +13,10 @@ export function googleCalendarEventToAppCalendarEvent(googleCalendarEvent) {
     end: googleCalendarEvent.end.date ?? googleCalendarEvent.end.dateTime,
     allDay: !!googleCalendarEvent.start.date,
 
+    startTimestamp: new Date(
+      googleCalendarEvent.start.date ?? googleCalendarEvent.start.dateTime
+    ).getTime(),
+
     ...(description && {
       description: description,
     }),
