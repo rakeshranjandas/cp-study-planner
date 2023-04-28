@@ -44,9 +44,10 @@ export function isEventASession(event) {
   return event?.properties?.tags?.includes(SYSTEM_TAG.IS_SESSION)
 }
 
-export function markEventDone(event) {
+function _addTagToEvent(event, [tagList]) {
   const tagSet = new Set(event?.properties?.tags)
-  tagSet.add(SYSTEM_TAG.IS_DONE)
+
+  tagList.forEach((tag) => tagSet.add(tag))
 
   const copiedEvent = {
     ...event,
@@ -54,4 +55,12 @@ export function markEventDone(event) {
   }
 
   return copiedEvent
+}
+
+export function markEventDone(event) {
+  return _addTagToEvent([SYSTEM_TAG.IS_DONE])
+}
+
+export function markEventSr(event) {
+  return _addTagToEvent([SYSTEM_TAG.IS_SR])
 }
