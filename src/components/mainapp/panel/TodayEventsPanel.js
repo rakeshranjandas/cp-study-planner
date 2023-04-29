@@ -8,7 +8,7 @@ export default function TodayEventsPanel(props) {
 
       <div className="panel-list-div">
         {props.events.map((event) => (
-          <PanelSingleEvent event={event} />
+          <PanelSingleEvent event={event} key={event.id} />
         ))}
       </div>
     </div>
