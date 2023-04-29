@@ -76,11 +76,10 @@ a:not([href]):hover {
     border: 1px solid lightgreen;
 }
 
-.item-logout {
+.item-settings-bar {
     grid-row: 1 / 2;
     grid-column: 10 / 12;
     display: flex;
-    flex-direction: row-reverse;
     gap: 3px;
 }
 

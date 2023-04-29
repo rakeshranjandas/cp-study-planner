@@ -1,5 +1,5 @@
 import React from "react"
-import Logout from "./logout/Logout"
+import SettingsBar from "./settingsbar/SettingsBar"
 import Calendar from "./calendar/Calendar"
 import TodayEventsPanel from "./panel/TodayEventsPanel"
 import BacklogEventsPanel from "./panel/BacklogEventsPanel"
@@ -124,8 +124,8 @@ export default function MainApp() {
     <>
       {loaded ? (
         <div className="grid-container">
-          <div className="grid-item item-logout">
-            <Logout srBacklogs={srBacklogs} />
+          <div className="grid-item item-settings-bar">
+            <SettingsBar srBacklogs={srBacklogs} />
           </div>
 
           <div className="grid-item item-calendar">
