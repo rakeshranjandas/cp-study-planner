@@ -387,3 +387,15 @@ a:not([href]):hover {
     height: 2em;
     padding: 2%;
 }
+
+.sr-manage-popup-main {
+    top: 5%;
+    left: 30%;
+    /* min-height: 70%; */
+    width: 40%;
+    background-color: white;
+}
+
+.sr-manage-header-div {
+    background-color: rgb(255, 255, 123);
+}

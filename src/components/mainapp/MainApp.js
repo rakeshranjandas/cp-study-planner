@@ -14,6 +14,7 @@ import { useMachine } from "@xstate/react"
 import { calendarMachine } from "./calendar/calendarMachine"
 import LoadingImage from "../../assets/images/loading-calendar.gif"
 import { isEventAnSR } from "../../util/filterEvents"
+import SRManager from "../../services/sr/SRManager"
 
 export default function MainApp() {
   const [loaded, setLoaded] = React.useState(false)
@@ -55,8 +56,7 @@ export default function MainApp() {
         srBacklogIdSet.add(backlogEvent.properties.sr.id)
     })
 
-    const srBacklogIdArr = Array.from(srBacklogIdSet)
-    setSrBacklogs(srBacklogIdArr)
+    setSrBacklogs(Array.from(srBacklogIdSet))
   }
 
   const panelsUpdater = React.useMemo(() => {
@@ -95,8 +95,6 @@ export default function MainApp() {
     return () => clearInterval(panelUpdaterInterval)
   }, [])
 
-  React.useEffect(() => {}, [backlogEvents])
-
   const [state, send] = useMachine(calendarMachine, {
     context: {
       calendarService: calendarService,
@@ -130,7 +128,11 @@ export default function MainApp() {
       {loaded ? (
         <div className="grid-container">
           <div className="grid-item item-settings-bar">
-            <SettingsBar srBacklogs={srBacklogs} />
+            <SettingsBar
+              srBacklogs={srBacklogs}
+              srManager={srManager}
+              appCalendarEvents={appCalendarEvents}
+            />
           </div>
 
           <div className="grid-item item-calendar">

@@ -6,7 +6,11 @@ import LogoutIcon from "./LogoutIcon"
 export default function SettingsBar(props) {
   return (
     <>
-      <SRManageIcon srBacklogs={props.srBacklogs} />
+      <SRManageIcon
+        srBacklogs={props.srBacklogs}
+        srManager={props.srManager}
+        appCalendarEvents={props.appCalendarEvents}
+      />
       <UserBar />
       <LogoutIcon />
     </>
