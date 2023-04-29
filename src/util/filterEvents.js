@@ -53,10 +53,7 @@ function _addTagToEvent(event, tagList) {
 
   tagList.forEach((tag) => tagSet.add(tag))
 
-  const copiedEvent = structuredClone(event)
-  copiedEvent.properties.tags = Array.from(tagSet)
-
-  return copiedEvent
+  event.properties.tags = Array.from(tagSet)
 }
 
 export function markEventDone(event) {
