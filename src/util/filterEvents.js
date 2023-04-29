@@ -48,23 +48,21 @@ export function isEventAnSR(event) {
   return event?.properties?.tags?.includes(SYSTEM_TAG.IS_SR)
 }
 
-function _addTagToEvent(event, [tagList]) {
-  const tagSet = new Set(event?.properties?.tags)
+function _addTagToEvent(event, tagList) {
+  const tagSet = new Set(event?.properties?.tags || [])
 
   tagList.forEach((tag) => tagSet.add(tag))
 
-  const copiedEvent = {
-    ...event,
-    properties: { ...event.properties, tags: Array.from(tagSet) },
-  }
+  const copiedEvent = structuredClone(event)
+  copiedEvent.properties.tags = Array.from(tagSet)
 
   return copiedEvent
 }
 
 export function markEventDone(event) {
-  return _addTagToEvent([SYSTEM_TAG.IS_DONE])
+  return _addTagToEvent(event, [SYSTEM_TAG.IS_DONE])
 }
 
 export function markEventSr(event) {
-  return _addTagToEvent([SYSTEM_TAG.IS_SR])
+  return _addTagToEvent(event, [SYSTEM_TAG.IS_SR])
 }
