@@ -47,10 +47,22 @@ export default function MainApp() {
     }
   }, [setAppCalendarEvents])
 
+  const updateSrBacklog = (backlogEventsPassed) => {
+    const srBacklogIdSet = new Set()
+
+    backlogEventsPassed.forEach((backlogEvent) => {
+      if (isEventAnSR(backlogEvent))
+        srBacklogIdSet.add(backlogEvent.properties.sr.id)
+    })
+
+    const srBacklogIdArr = Array.from(srBacklogIdSet)
+    setSrBacklogs(srBacklogIdArr)
+  }
+
   const panelsUpdater = React.useMemo(() => {
     return new AllPanelsUpdateService([
       new TodayPanelUpdateService(setTodayEvents),
-      new BacklogPanelUpdateService(setBacklogEvents),
+      new BacklogPanelUpdateService(setBacklogEvents, updateSrBacklog),
     ])
   }, [])
 
@@ -73,17 +85,7 @@ export default function MainApp() {
     return () => clearInterval(panelUpdaterInterval)
   }, [])
 
-  React.useEffect(() => {
-    const srBacklogIdSet = new Set()
-
-    backlogEvents.forEach((backlogEvent) => {
-      if (isEventAnSR(backlogEvent))
-        srBacklogIdSet.add(backlogEvent.properties.sr.id)
-    })
-
-    const srBacklogIdArr = Array.from(srBacklogIdSet)
-    setSrBacklogs(srBacklogIdArr)
-  }, [backlogEvents])
+  React.useEffect(() => {}, [backlogEvents])
 
   const [state, send] = useMachine(calendarMachine, {
     context: {

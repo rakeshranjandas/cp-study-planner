@@ -19,6 +19,7 @@ export const SREventsGenerator = {
     }
 
     firstAppEvent.title = appEvent.title + " <1>"
+    markEventSr(firstAppEvent)
 
     const appEventsList = [firstAppEvent]
 
@@ -30,12 +31,10 @@ export const SREventsGenerator = {
       nAppEvent.properties.sr.schemeDay = schemeArr[i]
       nAppEvent.properties.sr.day = i + 1
       nAppEvent.title = appEvent.title + " <" + (i + 1).toString() + ">"
+      markEventSr(nAppEvent)
 
       appEventsList.push(nAppEvent)
     }
-
-    // Add is-sr tags
-    appEventsList.forEach((appEvent) => markEventSr(appEvent))
 
     return appEventsList
   },
