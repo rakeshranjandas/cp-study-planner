@@ -1,16 +1,13 @@
 export class AbstractSinglePanelUpdateService {
-  setterFn = null
   callback = null
 
-  constructor(setterFnPassed, callback) {
-    this.setterFn = setterFnPassed
+  constructor(callback) {
     this.callback = callback
   }
 
   run(allEvents) {
     const filteredEvents = this.filterLogic(allEvents)
 
-    this.setterFn?.(filteredEvents)
     this.callback?.(filteredEvents)
   }
 

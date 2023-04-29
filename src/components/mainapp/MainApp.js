@@ -61,8 +61,13 @@ export default function MainApp() {
 
   const panelsUpdater = React.useMemo(() => {
     return new AllPanelsUpdateService([
-      new TodayPanelUpdateService(setTodayEvents),
-      new BacklogPanelUpdateService(setBacklogEvents, updateSrBacklog),
+      new TodayPanelUpdateService((todayEventsFiltered) =>
+        setTodayEvents(todayEventsFiltered)
+      ),
+      new BacklogPanelUpdateService((backlogEventsFiltered) => {
+        setBacklogEvents(backlogEventsFiltered)
+        updateSrBacklog(backlogEventsFiltered)
+      }),
     ])
   }, [])
 
