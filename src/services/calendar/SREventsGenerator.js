@@ -10,12 +10,15 @@ export const SREventsGenerator = {
     const srId = new Date().getTime().toString()
 
     const { formSR, ...firstAppEvent } = appEvent
+
     firstAppEvent.properties.sr = {
       scheme: schemeList,
       id: srId,
       schemeDay: schemeArr[0],
       day: 1,
     }
+
+    firstAppEvent.title = appEvent.title + " <1>"
 
     const appEventsList = [firstAppEvent]
 
@@ -26,6 +29,7 @@ export const SREventsGenerator = {
       nAppEvent.end = this._addDays(firstAppEvent.end, daysDiff)
       nAppEvent.properties.sr.schemeDay = schemeArr[i]
       nAppEvent.properties.sr.day = i + 1
+      nAppEvent.title = appEvent.title + " <" + (i + 1).toString() + ">"
 
       appEventsList.push(nAppEvent)
     }

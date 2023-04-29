@@ -121,11 +121,6 @@ export default function AppCalendar(props) {
         else if (new Date(appCalendarEventCopy.start) < new Date())
           appCalendarEventCopy.classNames.push("app-calendar-event-pending")
 
-        if (appCalendarEventCopy?.properties?.sr) {
-          appCalendarEventCopy.title +=
-            " <" + appCalendarEventCopy.properties.sr.day.toString() + ">"
-        }
-
         return appCalendarEventCopy
       }),
     [props.appCalendarEvents]
