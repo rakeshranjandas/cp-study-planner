@@ -81,6 +81,11 @@ export default function MainApp() {
     [panelsUpdater, setAppCalendarEvents]
   )
 
+  const srManager = React.useMemo(
+    () => new SRManager(calendarService),
+    [calendarService]
+  )
+
   React.useEffect(() => {
     if (!loaded) return
     const panelUpdaterInterval = setInterval(() => {
