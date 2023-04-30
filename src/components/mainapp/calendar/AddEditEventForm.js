@@ -106,6 +106,7 @@ export default function AddEditEventForm(props) {
             <p>
               <label>Title:</label>
               <input
+                disabled={srActions.isDisabled()}
                 type="text"
                 value={curEvent.title}
                 onChange={(e) =>
@@ -146,11 +147,6 @@ export default function AddEditEventForm(props) {
                   e.preventDefault()
                   if (curEvent.title === "") {
                     alert("Provide title")
-                    return false
-                  }
-
-                  if (curEvent?.properties?.sr) {
-                    alert("Cannot edit a Spaced-Repetition event")
                     return false
                   }
 
