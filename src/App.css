@@ -399,3 +399,15 @@ a:not([href]):hover {
 .sr-manage-header-div {
     background-color: rgb(255, 255, 123);
 }
+
+.sr-manage-container {
+    padding: 2em;
+}
+
+.sr-manage-single-sr {
+    text-align: center;
+    margin-top: 2em;
+    border: 1px solid black;
+    margin-left: 2em;
+    margin-right: 2em;
+}

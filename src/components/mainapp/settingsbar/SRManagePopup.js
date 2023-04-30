@@ -17,7 +17,13 @@ export default function SRManagePopup(props) {
   const [currentSRBacklogs, setCurrentSRBacklogs] =
     React.useState(srBacklogsData)
 
-  console.log(currentSRBacklogs)
+  function srResolved(srId) {
+    setCurrentSRBacklogs((oldSRBacklogs) => {
+      const newSRBacklogs = structuredClone(oldSRBacklogs)
+      newSRBacklogs[srId].done = true
+      setCurrentSRBacklogs(newSRBacklogs)
+    })
+  }
 
   return (
     <div className="popup-bg">
@@ -33,9 +39,33 @@ export default function SRManagePopup(props) {
             </span>
           </div>
 
-          <div> {JSON.stringify(currentSRBacklogs)}</div>
+          <div className="sr-manage-container">
+            {Object.keys(currentSRBacklogs).map((srId) => {
+              return (
+                <SRManageSingle srId={srId} data={currentSRBacklogs[srId]} />
+              )
+            })}
+          </div>
         </div>
       </div>
+    </div>
+  )
+}
+
+function SRManageSingle(props) {
+  return (
+    <div className="sr-manage-single-sr">
+      {props.data.events.map((e) => {
+        return (
+          <div className="sr-manage-single-event">
+            <span>
+              <b>{e.title}</b>
+            </span>{" "}
+            | {new Date(e.start).toLocaleString()} -{" "}
+            {new Date(e.end).toLocaleString()}
+          </div>
+        )
+      })}
     </div>
   )
 }
