@@ -1,4 +1,5 @@
 import React from "react"
+import SRManageSingle from "./SRManageSingle"
 import { isEventAnSR } from "../../../util/filterEvents"
 
 export default function SRManagePopup(props) {
@@ -6,6 +7,7 @@ export default function SRManagePopup(props) {
 
   props.appCalendarEvents.forEach((event) => {
     if (!isEventAnSR(event)) return
+
     const srId = event.properties.sr.id
     if (!props.srBacklogs.includes(srId)) return
 
@@ -48,24 +50,6 @@ export default function SRManagePopup(props) {
           </div>
         </div>
       </div>
-    </div>
-  )
-}
-
-function SRManageSingle(props) {
-  return (
-    <div className="sr-manage-single-sr">
-      {props.data.events.map((e) => {
-        return (
-          <div className="sr-manage-single-event">
-            <span>
-              <b>{e.title}</b>
-            </span>{" "}
-            | {new Date(e.start).toLocaleString()} -{" "}
-            {new Date(e.end).toLocaleString()}
-          </div>
-        )
-      })}
     </div>
   )
 }
